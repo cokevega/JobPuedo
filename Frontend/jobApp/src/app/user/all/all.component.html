@@ -1,0 +1,97 @@
+<div class="container-fluid mt-5">
+    <h1 class="text-center">Buscador de trabajadores</h1>
+    <!-- Filtrar trabajadores -->
+    <form #searchForm="ngForm" (ngSubmit)="filterWorkers()" class="row justify-content-center">
+        <!-- Filtrar por experiencias laborales -->
+        <div class="form-group col-xl-4 col-md-6 col-sm-8 col-12 text-center">
+            <label class="form-label fw-bold">Experiencias laborales</label>
+            <input class="form-control" type="text" name="experiences" ngModel>
+        </div>
+        <!-- Filtrar por estudios -->
+        <div class="form-group col-xl-4 col-md-6 col-sm-8 col-12 text-center">
+            <label class="form-label fw-bold">Estudios</label>
+            <input class="form-control" type="text" name="education" ngModel>
+        </div>
+        <div class="row">
+            <!-- Enviar -->
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">
+                    Filtrar
+                </button>
+            </div>
+        </div>
+    </form>
+    <hr>
+    <div *ngIf="users && users.length>0;else noUsers">
+        <!-- Mostrar trabajadores -->
+        <div class="row justify-content-center">
+            <div class="col-12 col-xl-4 col-lg-6 col-sm-8 mb-3 justify-content-center" *ngFor=" let user of users | paginate: {itemsPerPage: 6,currentPage: page}">
+                <div class="card bg-light mb-3 px-3">
+                    <div class="row g-0 justify-content-center">
+                        <div class="col-md-5 col-8 px-0" *ngIf="user.image;else noImage">
+                            <img [src]="baseUrl+ '/files/'+user.image.id">
+                        </div>
+                        <ng-template #noImage>
+                            <div class="col-md-5 col-8 px-0">
+                                <img src="assets/img/no-image.png">
+                            </div>
+                        </ng-template>
+                        <div class="col-md-7 px-0">
+                            <div class="col-12 card-header fw-bold text-center">
+                                {{user.name}} {{user.last_name}}
+                            </div>
+                            <div class="card-body">
+                                <h4 class="card-title fst-italic mb-1">
+                                    {{user.email+((user.phone)?' - '+user.phone:'')}}
+                                </h4>
+                                <div *ngIf="user.experiences && user.experiences.length>0" class="mb-1">
+                                    <h4 class="mb-0">Ha trabajado como:</h4>
+                                    <ul>
+                                        <div *ngFor="let experience of user.experiences;let i=index">
+                                            <li *ngIf="i<=2">
+                                                <span class="card-text" *ngIf="i<2">
+                                                    {{experience.position}}
+                                                </span>
+                                                <span *ngIf="i==2">
+                                                    ¡y más!
+                                                </span>
+                                            </li>
+                                        </div>
+                                    </ul>
+                                </div>
+                                <div *ngIf="user.education && user.education.length>0" class="mb-1">
+                                    <h4 class="mb-0 card-title">Ha estudiado:</h4>
+                                    <ul>
+                                        <div *ngFor="let education of user.education;let i=index">
+                                            <li *ngIf="i<=2">
+                                                <span class="card-text" *ngIf="i<2">
+                                                    {{education.name}}
+                                                </span>
+                                                <span *ngIf="i==2">
+                                                    ¡y más!
+                                                </span>
+                                            </li>
+                                        </div>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a [routerLink]="['/user/show',user.id]" class="btn btn-info">
+                                Ver CV
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Control de paginación -->
+            <pagination-controls *ngIf="users.length>6" previousLabel="Anterior" nextLabel="Siguiente" (pageChange)="page=$event">
+            </pagination-controls>
+        </div>
+    </div>
+    <ng-template #noUsers>
+        <div class="alert alert-warning">
+            No hay usuarios con los requisitos especificados
+        </div>
+    </ng-template>
+</div>

@@ -1,0 +1,25 @@
+<div *ngIf="applications">
+    <div *ngFor="let application of applications | paginate: {itemsPerPage: 1,currentPage: page}">
+        <!-- Si la candidatura ya ha sido rechazada no aparece -->
+        <div *ngIf="application.status!=='REJECTED'">
+            <!-- Estado de la candidatura -->
+            <div *ngIf="application.status==='UNKNOWN'" class="row justify-content-center mt-5">
+                <button (click)="reject(application.id)" class="btn btn-warning col-xl-1 col-md-2 col-3">Rechazar</button>
+                <button (click)="accept(application.id)" class="btn btn-success ml-4 col-xl-1 col-md-2 col-3">Aceptar</button>
+            </div>
+            <div *ngIf="application.status==='ACCEPTED'" class="alert alert-success mt-5 text-center fw-bold" role="alert">
+                Trabajador aceptado
+            </div>
+            <div *ngIf="application.comments" class="row justify-content-center px-5">
+                <!-- Carta de presentación del usuario inscrito -->
+                <div class="bg-light shadow rounded mt-3 p-3 col-12 col-lg-6" [innerHTML]="application.comments">
+                </div>
+            </div>
+            <!-- CV del usuario inscrito -->
+            <app-user-cv [user]="application.user!"></app-user-cv>
+        </div>
+    </div>
+    <!-- Control de paginación -->
+    <pagination-controls *ngIf="applications.length>1" previousLabel="Anterior" nextLabel="Siguiente" (pageChange)="page=$event">
+    </pagination-controls>
+</div>

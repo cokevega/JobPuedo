@@ -1,0 +1,29 @@
+<header class="row">
+    <!-- Menú del header -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container px-5">
+            <a class="navbar-brand" [routerLink]="['/main/index']" routerLinkActive="router-link-active">JobPuedo</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li *ngIf="showMyOffersButton" class="nav-item"><a class="nav-link d-flex-align-center" [routerLink]="['/offer/all']">Mis ofertas</a></li>
+                    <li *ngIf="showProfileButton" class="nav-item"><a class="nav-link" [routerLink]="['/user/show',id]">Perfil</a></li>
+                    <li *ngIf="showLoginButton" class="nav-item"><a class="nav-link" [routerLink]="['/auth/login']">Iniciar sesión</a></li>
+                    <li *ngIf="showRegisterButton" class="nav-item"><a class="nav-link d-flex align-center" [routerLink]="['/auth/register']" routerLinkActive="router-link-active">Registro</a></li>
+                    <li *ngIf="showLogoutButton" class="nav-item btn-group">
+                        <a class="nav-link dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            Salir
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li>
+                                <a class="dropdown-item" (click)="logout()" [routerLink]="['/auth/logout']">
+                                    Cerrar sesión
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>

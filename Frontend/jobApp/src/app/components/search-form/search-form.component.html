@@ -1,0 +1,29 @@
+<form (ngSubmit)="searchOffers(searchForm)" #searchForm="ngForm">
+    <!-- Buscar por detalles de la oferta -->
+    <div class="form-group">
+        <label for="text">Búsqueda por texto</label>
+        <input ngModel name="description" type="text" class="form-control" id="text" placeholder="Palabras clave">
+    </div>
+    <!-- Buscar por categoría -->
+    <label for="categories">Categoría</label>
+    <select (change)="changeTooltipMessage()" class="form-control mb-2" id="categories" ngModel name="category">
+        <option value="" selected>Cualquiera</option>
+        <option *ngFor="let category of categories" [value]="category.id">
+            {{category.name}}
+        </option>
+    </select>
+    <!-- Tooltip con info de la categoría seleccionada -->
+    <button mat-raised-button #tooltip="matTooltip" [matTooltip]="tooltipMessage" [matTooltipPosition]="'below'" aria-label="Button that displays a tooltip that hides when scrolled out of the container" class="example-button">
+        Información de la categoría seleccionada
+    </button>
+    <div class="row justify-content-between">
+        <!-- Resetear form -->
+        <button (click)="resetOffers(searchForm)" type="button" class="btn btn-danger my-2 col-3">
+            Borrar
+        </button>
+        <!-- Enviar -->
+        <button type="submit" class="btn btn-primary my-2 col-3">
+            Buscar
+        </button>
+    </div>
+</form>

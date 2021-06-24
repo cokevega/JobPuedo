@@ -1,0 +1,74 @@
+<div class="container-fluid">
+    <div class="text-center mt-5" *ngIf="isAdmin">
+        <!-- Ir al panel de administrador -->
+        <a class="btn btn-secondary" [routerLink]="'/admin/categories'">
+            Panel de administración
+        </a>
+    </div>
+    <!-- Usuario empresa -->
+    <div *ngIf="user?.enterprise;else noEnterprise">
+        <h1 class="mt-5 text-center">Mis ofertas</h1>
+        <div class="text-center mb-2">
+            <!-- Añadir oferta -->
+            <a [routerLink]="['/offer/enterprise/create']" class="btn btn-success mr-2">
+                Añadir oferta
+            </a>
+            <!-- Ir al buscador de trabajadores -->
+            <a [routerLink]="['/user/all']" class="btn btn-info">
+                Buscar trabajadores
+            </a>
+        </div>
+        <div class="row justify-content-center">
+            <div class="alert alert-warning" *ngIf="offers.length===0">
+                Aún no has publicado ninguna oferta. Crea una para comenzar a contratar.
+            </div>
+            <div *ngFor="let offer of offers | paginate: {itemsPerPage: 3, currentPage: page} " class="col-lg-4 col-md-6 col-sm-8 col-12">
+                <!-- Presentación oferta -->
+                <app-offer-card [offer]="offer" [complete]="true"></app-offer-card>
+            </div>
+            <!-- Control de paginación -->
+            <pagination-controls *ngIf="offers.length>3" previousLabel="Anterior" nextLabel="Siguiente" (pageChange)="page=$event">
+            </pagination-controls>
+        </div>
+    </div>
+    <!-- Usuario trabajador -->
+    <ng-template #noEnterprise>
+        <h1 class="mt-5 text-center">Mis inscripciones</h1>
+        <div *ngIf="offers.length>0;else noOffers">
+            <div *ngFor="let offer of offers | paginate: {itemsPerPage: 3, currentPage: page}" class="row justify-content-center">
+                <div class="col-lg-4 col-md-6 col-sm-8 col-12" *ngIf="offer.status==='Active'">
+                    <!-- Estado de la candidatura -->
+                    <div *ngIf="candidacyStatus(offer,'REJECTED');else notRejected">
+                        <div class="alert alert-danger">
+                            Han rechazado tu candidatura
+                        </div>
+                    </div>
+                    <ng-template #notRejected>
+                        <div *ngIf="candidacyStatus(offer,'ACCEPTED');else notTouched">
+                            <div class="alert alert-success">
+                                Han aceptado tu candidatura. Puedes contactar con la empresa en la siguiente dirección de correo electrónico: {{offer.enterprise.email}}
+                            </div>
+                        </div>
+                        <ng-template #notTouched>
+                            <div class="alert alert-warning">
+                                Tu candidatura aún no ha sido vista
+                            </div>
+                        </ng-template>
+                    </ng-template>
+                    <!-- Oferta -->
+                    <div [ngClass]="{rejected: candidacyStatus(offer,'REJECTED')}">
+                        <app-offer-card [offer]="offer"></app-offer-card>
+                    </div>
+                </div>
+            </div>
+            <!-- Control de paginación -->
+            <pagination-controls *ngIf="offers.length>3" previousLabel="Anterior" nextLabel="Siguiente" (pageChange)="page=$event">
+            </pagination-controls>
+        </div>
+        <ng-template #noOffers>
+            <div class="alert alert-warning">
+                No hay ninguna oferta activa en estos momentos a la que estés inscrito.
+            </div>
+        </ng-template>
+    </ng-template>
+</div>

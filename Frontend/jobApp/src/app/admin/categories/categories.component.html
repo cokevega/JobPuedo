@@ -1,0 +1,91 @@
+<h1 class="text-center">Administrar categorías</h1>
+<hr>
+<button type="button" class="btn btn-success mb-2" data-bs-toggle="collapse" data-bs-target="#addCategory" aria-expanded="false" aria-controls="addCategory">
+    Añadir
+</button>
+<div *ngIf="categories.length>0">
+    <!-- Añadir categoría -->
+    <div class="collapse mb-2 col-12 col-lg-6" id="addCategory">
+        <form (ngSubmit)="addCategory()" class="form-group" #addForm="ngForm">
+            <!-- Nombre -->
+            <label class="form-label">Nombre</label>
+            <input type="text" class="form-control mb-2" name="name" ngModel required>
+            <span class="form-text text-danger" *ngIf="validateField(addForm,'name')">
+                El nombre es obligatorio
+            </span>
+            <!-- Descripción -->
+            <label class="form-label">Descripción</label>
+            <textarea class="form-control mb-2" name="description" ngModel required minlength="30">
+            </textarea>
+            <span class="form-text text-danger" *ngIf="validateField(addForm,'description')">
+                La descripción debe tener un mínimo de 30 caracteres
+            </span>
+            <!-- Enviar -->
+            <button type="submit" [disabled]="addForm.invalid" class="btn btn-info mt-2">
+                Añadir
+            </button>
+        </form>
+    </div>
+    <!--  -->
+    <!-- Mostrar todas las categorías -->
+    <table class="table table-dark table-striped table-responsive">
+        <thead>
+            <th class="text-center">Nombre</th>
+            <th class="text-center">Descripción</th>
+            <th class="text-center">Activa</th>
+            <th class="text-center">Acciones</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let category of categories | paginate: { itemsPerPage: 10, currentPage: page } ">
+                <td class="align-middle">{{category.name}}</td>
+                <td class="align-middle">
+                    {{category.description}}
+                    <!-- Editar categoría -->
+                    <div class="collapse mb-2 col-12 col-lg-6" [id]="'editCategory'+category.id.toString()">
+                        <form (ngSubmit)="editCategory(category)" class="form-group" #editForm="ngForm">
+                            <label class="form-label">Nombre</label>
+                            <input type="text" class="form-control mb-2" name="name" [(ngModel)]="category.name" required>
+                            <span class="form-text text-danger" *ngIf="validateField(editForm,'name')">
+                                El nombre es obligatorio
+                            </span>
+                            <label class="form-label">Descripción</label>
+                            <textarea class="form-control mb-2" name="description" [(ngModel)]="category.description" required minlength="30">
+                            </textarea>
+                            <span class="form-text text-danger" *ngIf="validateField(editForm,'description')">
+                                La descripción debe tener un mínimo de 30 caracteres
+                            </span>
+                            <button type="submit" [disabled]="editForm.invalid" class="btn btn-info mt-2">
+                                Editar
+                            </button>
+                            <span class="form-text text-light">
+                                Si no cambias nada no se producirá efecto alguno al enviar el formulario
+                            </span>
+                        </form>
+                    </div>
+                    <!--  -->
+                </td>
+                <td class="align-middle" [ngClass]="{'text-success': category.active,'text-danger': !category.active}">{{(category.active)?'Sí':'No'}}</td>
+                <td class="align-middle">
+                    <div *ngIf="category.active;else reactivate" class="d-flex">
+                        <a role="button" [href]="'#editCategory'+category.id.toString()" class="btn btn-info mr-1" data-bs-toggle="collapse" aria-expanded="false" aria-controls="editCategory">
+                            <mat-icon>edit</mat-icon>
+                        </a>
+                        <a class="btn btn-danger" (click)="deleteCategory(category.id)">
+                            <mat-icon>delete</mat-icon>
+                        </a>
+                    </div>
+                    <ng-template #reactivate>
+                        <button (click)="activateCategory(category.id)" class="btn btn-success">
+                            Reactivar
+                        </button>
+                    </ng-template>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <!--  -->
+    <!-- Control de paginación -->
+    <pagination-controls *ngIf="categories.length>10" previousLabel="Anterior" nextLabel="Siguiente" (pageChange)="page=$event">
+    </pagination-controls>
+    <!--  -->
+</div>

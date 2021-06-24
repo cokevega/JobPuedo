@@ -1,0 +1,36 @@
+<!-- Heading Row-->
+<div class="container-fluid main-container">
+    <!-- Encabezado -->
+    <div class="row gx-4 gx-lg-5 align-items-center my-5 justify-content-center">
+        <div class="col-lg-5">
+            <img class="img-fluid rounded mb-4 mb-lg-0" src="assets/img/main.jpeg" />
+        </div>
+        <div class="col-lg-5">
+            <h1 class="font-weight-light">Encuentra tu trabajo soñado</h1>
+            <p class="text-center">
+                ¿Hay algo mejor que hacer de tu sueño tu profesión? Aquello que tanto te gusta, que tanto disfrutas mientras te dedicas a ello y, sobre todo, donde siempre descubres que podías aprender algo nuevo y que aún podías hacerlo mejor.
+            </p>
+            <!-- Formulario de filtrado -->
+            <app-search-form (offersEmitted)="showOffersSearched($event)"></app-search-form>
+        </div>
+    </div>
+    <!-- Contenido: ofertas -->
+    <div class="row justify-content-center">
+        <div class="col-lg-7 col-12">
+            <h1>Últimas ofertas</h1>
+            <div *ngIf="offers.length>0;else noOffersAvailable">
+                <!-- Presentación de la oferta -->
+                <app-offer-card *ngFor="let offer of offers | paginate: {itemsPerPage: 5,currentPage: page} " [offer]="offer">
+                </app-offer-card>
+                <!-- Control de paginación -->
+                <pagination-controls *ngIf="offers.length>5" previousLabel="Anterior" nextLabel="Siguiente" (pageChange)="page=$event">
+                </pagination-controls>
+            </div>
+            <ng-template #noOffersAvailable>
+                <div class="alert alert-warning fw-bold">
+                    No hay ofertas disponibles en este momento. Por favor, inténtalo de nuevo más tarde.
+                </div>
+            </ng-template>
+        </div>
+    </div>
+</div>

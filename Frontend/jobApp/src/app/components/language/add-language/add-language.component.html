@@ -1,0 +1,46 @@
+<div class="card card-body bg-light">
+    <h2>Añadir idioma</h2>
+    <form class="form-group" #formLanguage="ngForm" (ngSubmit)="addLanguage()">
+        <div class="row align-items-center mb-3">
+            <!-- Nombre idioma -->
+            <div class="col-12">
+                <h4 class="fw-bold">
+                    Idioma
+                </h4>
+            </div>
+            <div class="col-12">
+                <input ngModel name="name" type="text" class="form-control" required>
+                <span *ngIf="validateFieldLanguage('name')" class="text-danger form-text">
+                    El idioma es obligatorio
+                </span>
+            </div>
+        </div>
+        <div class="row align-items-center mb-3">
+            <!-- Nivel -->
+            <div class="col-12">
+                <h4 class="fw-bold">
+                    Nivel
+                </h4>
+            </div>
+            <div class="col-12">
+                <select class="form-select" ngModel name="level" aria-label="Default select example" required>
+                    <option selected>Selecciona nivel</option>
+                    <option value="Básico">Básico</option>
+                    <option value="Medio">Medio</option>
+                    <option value="Avanzado">Avanzado</option>
+                </select>
+                <span *ngIf="validateFieldLanguage('level')" class="text-danger form-text">
+                    El nivel es obligatorio
+                </span>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Enviar -->
+            <div class="col-3 col-xs-6">
+                <button [disabled]="formLanguage?.invalid" type="submit" class="btn btn-success">
+                    Agregar
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

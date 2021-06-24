@@ -1,0 +1,36 @@
+h1 {
+    text-align: center;
+}
+
+img {
+    width: 100%;
+}
+
+.sidenav-container {
+    position: fixed;
+    top: 20%;
+    left: 0;
+    border-radius: 0.3rem;
+    height: 300px;
+}
+
+.sidenav-content {
+    padding: .5rem;
+}
+
+.sidenav-content mat-icon {
+    cursor: pointer;
+}
+
+.sidenav {
+    padding: .5rem;
+    width: 300px;
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+.main-container {
+    overflow: hidden;
+}

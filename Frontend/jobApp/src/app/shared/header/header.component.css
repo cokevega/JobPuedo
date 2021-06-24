@@ -1,0 +1,23 @@
+mat-toolbar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.menu-button {
+    background-color: transparent;
+    border: none;
+    transition: border 1s ease-out;
+}
+
+.menu-button:hover {
+    cursor: pointer;
+    border: 1px solid gray;
+}
+
+.menu-button mat-icon {
+    color: #ffffff;
+}
+
+.nav-link:hover {
+    cursor: pointer;
+}

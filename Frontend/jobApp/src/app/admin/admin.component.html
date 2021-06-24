@@ -1,0 +1,22 @@
+<div class="container-fluid mt-5">
+    <div class="row">
+        <!-- Menú -->
+        <div class="col-lg-3 mb-3">
+            <div class="list-group">
+                <a routerLink="/admin/categories" class="list-group-item list-group-item-action" routerLinkActive="active">
+                    Categorías
+                </a>
+                <a routerLink="/admin/users" class="list-group-item list-group-item-action" routerLinkActive="active">
+                    Usuarios
+                </a>
+                <a routerLink="/admin/offers" class="list-group-item list-group-item-action" routerLinkActive="active">
+                    Ofertas
+                </a>
+            </div>
+        </div>
+        <!-- Contenido -->
+        <div class="col-lg-9">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

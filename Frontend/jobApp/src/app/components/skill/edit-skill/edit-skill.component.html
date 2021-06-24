@@ -1,0 +1,47 @@
+<div class="card card-body bg-light">
+    <h2>Editar habilidad/tecnología</h2>
+    <form class="form-group" #formSkill="ngForm" (ngSubmit)="editSkill(skill.id)">
+        <div class="row align-items-center mb-3">
+            <div class="col-12 col-lg-6">
+                <div class="col-12">
+                    <h4 class="fw-bold">
+                        Habilidad/tecnología
+                    </h4>
+                </div>
+                <div class="col-12">
+                    <input [(ngModel)]="skill.name" name="name" type="text" class="form-control" required>
+                    <span *ngIf="validateFieldSkill('name')" class="text-danger form-text">
+                        El nombre de la habilidad/tecnología es obligatorio
+                    </span>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6">
+                <div class="col-12">
+                    <h4 class="fw-bold">
+                        Nivel
+                    </h4>
+                </div>
+                <div class="col-12">
+                    <select class="form-select" [(ngModel)]="skill.level" name="level" aria-label="Default select example" required>
+                        <option value="Básico">Básico</option>
+                        <option value="Medio">Medio</option>
+                        <option value="Avanzado">Avanzado</option>
+                    </select>
+                    <span *ngIf="validateFieldSkill('level')" class="text-danger form-text">
+                        El nivel es obligatorio
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 col-xs-6">
+                <button [disabled]="formSkill?.invalid" type="submit" class="btn btn-success">
+                    Editar
+                </button>
+            </div>
+            <span class="form-text">
+                Si no cambias nada, no tendrá ningún efecto el envío del formulario
+            </span>
+        </div>
+    </form>
+</div>

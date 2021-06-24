@@ -1,0 +1,20 @@
+<div class="all-height bg-gra-02 row align-items-center">
+    <div class="wrapper fadeInDown">
+        <div id="formContent" class="p-5">
+            <div class="fadeIn first">
+                <mat-icon>person_pin</mat-icon>
+            </div>
+            <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
+                <!-- Email -->
+                <input ngModel type="text" class="fadeIn second" name="email" placeholder="Email">
+                <!-- Contraseña -->
+                <input ngModel type="password" class="fadeIn third" name="password" placeholder="Contraseña">
+                <!-- Enviar -->
+                <input type="submit" class="fadeIn fourth" value="Entrar">
+            </form>
+            <div id="formFooter">
+                ¿No tienes una cuenta? Regístrate <a class="underlineHover" [routerLink]="['/auth/register']">aquí</a>
+            </div>
+        </div>
+    </div>
+</div>

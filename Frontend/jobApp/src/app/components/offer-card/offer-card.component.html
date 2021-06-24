@@ -1,0 +1,55 @@
+<mat-card class="mb-5" *ngIf="offer && showThisOffer(offer.id)">
+    <!-- Información de la oferta -->
+    <mat-card-header class="p-2">
+        <mat-card-title>{{offer.name}}</mat-card-title>
+        <mat-card-subtitle>{{offer.category.name}}</mat-card-subtitle>
+        <mat-card-subtitle>{{offer.date}}</mat-card-subtitle>
+        <!-- Conocer usuarios inscritos -->
+        <mat-card-subtitle *ngIf="user?.id===offer.enterprise.id"><a [routerLink]="['/offer/enterprise/applications',offer.id]" class="link-info">{{offer.applications?.length}} inscritos</a></mat-card-subtitle>
+    </mat-card-header>
+    <!-- Cuando la información ha de ser completa se muestra también la imagen de la empresa anunciante -->
+    <div *ngIf="complete">
+        <img mat-card-image *ngIf="offer.enterprise.image;else noImage" [src]="baseUrl+'/files/'+offer.enterprise.image.id" alt="">
+        <ng-template #noImage>
+            <img mat-card-image src="assets/img/no-image.png">
+        </ng-template>
+    </div>
+    <!-- Más información de la oferta -->
+    <mat-card-content class="px-4">{{offer.description}}</mat-card-content>
+    <!-- Cuando la información ha de ser completa se muestra también el campo details -->
+    <div *ngIf="complete">
+        <hr>
+        <mat-card-content [innerHTML]="offer.details.toString()">
+        </mat-card-content>
+    </div>
+    <!-- Acciones: se muestran unas opciones u otras en función del rol y de si es el usuario creador de la oferta -->
+    <mat-card-actions class="px-4 d-flex flex-wrap justify-content-center align-items-center">
+        <button *ngIf="user?.id!==offer.enterprise.id && !apply && showRejectButton()" type="button" class="btn mt-2 ml-2 btn-danger" (click)="reject(offer.id)">
+            Descartar
+        </button>
+        <a *ngIf="!complete" [routerLink]="['/offer/show',offer.id]" class="btn mt-2 ml-2 btn-info">Mostrar más</a>
+        <a *ngIf="!apply && showApplyButton(offer)" [routerLink]="['/offer/user/apply',offer.id]" class="btn mt-2 ml-2 btn-success">
+            Inscribirme
+        </a>
+        <a [routerLink]="['/offer/enterprise/edit',offer.id]" *ngIf="user?.id===offer.enterprise.id && offer.status!=='Deleted'" class="btn mt-2 ml-2 btn-primary" role="button">
+            Editar
+        </a>
+        <div *ngIf="user?.id===offer.enterprise.id">
+            <div *ngIf="offer.status==='Active'">
+                <span class="ml-2 text-light">Estado: <div class="fw-bold ml-2">Activa</div></span>
+                <button (click)="deleteOffer(offer.id)" class="btn mt-2 ml-2 btn-danger" role="button">
+                    Eliminar
+                </button>
+            </div>
+            <div *ngIf="offer.status==='Created'">
+                <span class="text-light ml-2">Estado: <div class="fw-bold text-danger ml-2">Inactiva</div></span>
+                <button (click)="activeOffer(offer.id)" class="btn mt-2 ml-2 btn-success" role="button">
+                    Activar
+                </button>
+            </div>
+            <div *ngIf="offer.status==='Deleted'">
+                <span class="text-light ml-2">Estado: <div class="fw-bold text-danger ml-2">Eliminada</div></span>
+            </div>
+        </div>
+    </mat-card-actions>
+</mat-card>

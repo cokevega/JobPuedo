@@ -1,0 +1,85 @@
+<div class="card card-body bg-light">
+    <h2>Añadir estudios</h2>
+    <form class="form-group" #formStudy="ngForm" (ngSubmit)="addStudy()">
+        <div class="row align-items-center mb-3">
+            <!-- Títutlo -->
+            <div class="col-12">
+                <h4 class="fw-bold">
+                    Nombre/título
+                </h4>
+            </div>
+            <div class="col-12">
+                <input ngModel name="name" type="text" class="form-control" required>
+                <span *ngIf="validateFieldStudy('name')" class="text-danger form-text">
+                    El nombre es obligatorio
+                </span>
+            </div>
+        </div>
+        <div class="row align-items-center mb-3">
+            <!-- Nivel de estudios -->
+            <div class="col-12">
+                <h4 class="fw-bold">
+                    Nivel
+                </h4>
+            </div>
+            <div class="col-12">
+                <select class="form-select" ngModel name="title" required>
+                    <option value="FP Básico">FP Básico</option>
+                    <option value="FP Medio">FP Medio</option>
+                    <option value="FP Superior">FP Superior</option>
+                    <option value="Grado Universitario">Grado Universitario</option>
+                    <option value="Postgrado">Estudios de postgrado</option>
+                    <option value="Doctorado">Doctorado</option>
+                    <option value="Otras certificaciones, títulos y carnés">Otras certificaciones, títulos y carnés</option>
+                </select>
+                <span *ngIf="validateFieldStudy('title')" class="text-danger form-text">
+                    El nivel es obligatorio
+                </span>
+            </div>
+            <div class="col-12 mt-3">
+                <!-- Escuela -->
+                <h4 class="fw-bold">
+                    Institución
+                </h4>
+            </div>
+            <div class="col-12">
+                <input ngModel name="school" type="text" class="form-control" required>
+                <span *ngIf="validateFieldStudy('school')" class="text-danger form-text">
+                    La institución/universidad es obligatoria
+                </span>
+            </div>
+            <div class="col-12 mt-3">
+                <!-- Fecha de inicio -->
+                <h4 class="fw-bold">
+                    Inicio
+                </h4>
+            </div>
+            <div class="col-12">
+                <input ngModel name="begin" type="date" class="form-control" required>
+                <span *ngIf="validateFieldStudy('begin')" class="text-danger form-text">
+                    La fecha de inicio es obligatoria
+                </span>
+            </div>
+            <div class="col-12 mt-3">
+                <!-- Fecha de fin -->
+                <h4 class="fw-bold">
+                    Final
+                </h4>
+            </div>
+            <div class="col-12">
+                <input ngModel name="end" type="date" class="form-control">
+                <span class="form-text">
+                    No marques nada para indicar que aún sigues en estos estudios
+                </span>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Enviar -->
+            <div class="col-3 col-xs-6">
+                <button [disabled]="formStudy?.invalid" type="submit" class="btn btn-success">
+                    Agregar
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

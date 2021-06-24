@@ -1,0 +1,97 @@
+<div class="card card-body bg-light">
+    <h2>Añadir experiencia</h2>
+    <form class="form-group" #formExperience="ngForm" (ngSubmit)="addExperience()">
+        <div class="row align-items-center mb-3">
+            <!-- Puesto -->
+            <div class="col-12 col-lg-4">
+                <h4 class="fw-bold">
+                    Puesto/cargo
+                </h4>
+            </div>
+            <div class="col-12 col-lg-8">
+                <input ngModel name="position" type="text" class="form-control" required>
+                <span *ngIf="validateFieldExperience('position')" class="text-danger form-text">
+                    El puesto/cargo es obligatorio
+                </span>
+            </div>
+        </div>
+        <div class="row align-items-center mb-3">
+            <!-- Localidad -->
+            <div class="col-12 col-lg-4">
+                <h4 class="fw-bold">
+                    Ciudad/localidad
+                </h4>
+            </div>
+            <div class="col-12 col-lg-8">
+                <input ngModel name="city" type="text" class="form-control" required>
+                <span *ngIf="validateFieldExperience('city')" class="text-danger form-text">
+                    La localización es obligatoria
+                </span>
+            </div>
+        </div>
+        <div class="row align-items-center mb-3">
+            <!-- Empresa -->
+            <div class="col-12 col-lg-4">
+                <h4 class="fw-bold">
+                    Empresa/institución
+                </h4>
+            </div>
+            <div class="col-12 col-lg-8">
+                <input ngModel name="enterprise" type="text" class="form-control" required>
+                <span *ngIf="validateFieldExperience('enterprise')" class="text-danger form-text">
+                    La empresa para la que trabajaste es obligatoria
+                </span>
+            </div>
+        </div>
+        <div class="row align-items-center mb-3">
+            <!-- Fecha de inicio -->
+            <div class="col-12 col-lg-4">
+                <h4 class="fw-bold">
+                    Fecha de inicio
+                </h4>
+            </div>
+            <div class="col-12 col-lg-8">
+                <input ngModel name="begin" type="date" class="form-control" required>
+                <span *ngIf="validateFieldExperience('begin')" class="text-danger form-text">
+                    La fecha de inicio es obligatoria
+                </span>
+            </div>
+        </div>
+        <div class="row align-items-center mb-3">
+            <!-- Fecha fin -->
+            <div class="col-12 col-lg-4">
+                <h4 class="fw-bold">
+                    Fecha de fin
+                </h4>
+            </div>
+            <div class="col-12 col-lg-8">
+                <input ngModel name="end" type="date" class="form-control">
+                <span class="form-text">
+                    No marques nada para indicar que aún trabajas aquí
+                </span>
+            </div>
+        </div>
+
+        <div class="row align-items-center mb-3">
+            <!-- Descripción del puesto -->
+            <div class="col-12">
+                <div class="form-floating">
+                    <textarea ngModel name="comments" class="form-control">
+                    </textarea>
+                    <label>Comentarios</label>
+                </div>
+            </div>
+            <span class="col-12 form-text">
+                Añade aquí las funciones desempeñadas, las responsabilidades asumidas y otros datos de interés para los posibles contratantes
+            </span>
+        </div>
+        <div class="row">
+            <!-- Enviar -->
+            <div class="col-3 col-xs-6">
+                <button [disabled]="formExperience?.invalid" type="submit" class="btn btn-success">
+                    Agregar
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

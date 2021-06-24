@@ -1,0 +1,94 @@
+<h1 class="text-center">Administrar usuarios</h1>
+<hr>
+<!-- Filtrar usuarios -->
+<h2 class="text-center">Filtrar</h2>
+<form #searchForm="ngForm" (ngSubmit)="searchUsers()" class="row mb-2">
+    <div class="col-lg-3 col-sm-6 col-12">
+        <!-- Filtrar por rol -->
+        <div class="form-group">
+            <label class="form-label">Tipo de usuario</label>
+            <select ngModel class="form-select" name="role">
+                <option value="" selected>Cualquiera</option>
+                <option value="ROLE_USER">Usuario</option>
+                <option value="ROLE_ENTERPRISE">Empresa</option>
+                <option value="ROLE_ADMIN">Administrador</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-lg-3 col-sm-6 col-12">
+        <!-- Filtrar por nombre -->
+        <div class="form-group">
+            <label class="form-label">Nombre</label>
+            <input ngModel type="text" name="name" class="form-control">
+        </div>
+    </div>
+    <div class="col-lg-3 col-sm-6 col-12">
+        <!-- Filtrar por email -->
+        <div class="form-group">
+            <label class="form-label">Email</label>
+            <input ngModel type="text" name="email" class="form-control">
+        </div>
+    </div>
+    <div class="col-lg-3 col-sm-6 col-12">
+        <!-- Filtrar por estado -->
+        <label class="form-label">Estatus</label>
+        <select ngModel name="status" class="form-select">
+                <option value="" selected>Cualquiera</option>
+                <option value="0">Inactivo</option>
+                <option value="1">Activo</option>
+            </select>
+    </div>
+    <div class="text-center">
+        <!-- Enviar -->
+        <button type="submit" class="btn btn-info">Filtrar</button>
+    </div>
+</form>
+<!--  -->
+<hr>
+<div *ngIf="users.length>0;else noUsers">
+    <!-- Mostrar todos los usuarios -->
+    <table class="table table-dark table-striped">
+        <thead>
+            <th class="text-center">Imagen</th>
+            <th class="text-center">Nombre</th>
+            <th class="text-center">Email</th>
+            <th class="text-center">Fecha de registro</th>
+            <th class="text-center">Activo</th>
+            <th class="text-center">Acciones</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of users | paginate: { itemsPerPage: 10, currentPage: page } ">
+                <td class="align-middle">
+                    <img *ngIf="user.image;else noImage" [src]="baseUrl+'/files/'+user.image.id">
+                    <ng-template #noImage>
+                        <img [src]="'assets/img/no-image.png'">
+                    </ng-template>
+                </td>
+                <td class="align-middle text-center">
+                    {{(user.enterprise)?user.name+' - '+user.contact_name+' '+user.contact_last_name:user.name+' '+user.last_name}}
+                </td>
+                <td class="align-middle text-center">{{user.email}}</td>
+                <td class="align-middle text-center">{{user.registered_at | date}}</td>
+                <td class="align-middle text-center">{{(user.status===1)?'Sí':'No'}}</td>
+                <td *ngIf="user.status===1" class="align-middle text-center">
+                    <button *ngIf="!isAdmin(user)" (click)="newAdmin(user.id)" class="btn btn-warning mr-2 mb-1">
+                        Hacer admin
+                    </button>
+                    <button (click)="deleteUser(user.id)" class="btn btn-danger">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <!--  -->
+    <!-- Control de paginación -->
+    <pagination-controls previousLabel="Anterior" nextLabel="Siguiente" (pageChange)="page=$event">
+    </pagination-controls>
+    <!--  -->
+</div>
+<ng-template #noUsers>
+    <div class="alert alert-warning">
+        No hay usuarios con los criterios de búsqueda seleccionados
+    </div>
+</ng-template>

@@ -1,0 +1,104 @@
+<h1 class="text-center">Administrar ofertas</h1>
+<hr>
+<!-- Filtrar ofertas -->
+<h2 class="text-center">Filtrar</h2>
+<form #searchForm="ngForm" class="row mb-2 align-items-center" (ngSubmit)="filterOffers()">
+    <!-- Filtrar por título -->
+    <div class="col-lg-4 col-sm-6 col-12">
+        <div class="form-group">
+            <label class="form-label">Título</label>
+            <input type="text" ngModel name="name" class="form-control">
+        </div>
+    </div>
+    <!-- Filtrar por descripción -->
+    <div class="col-lg-4 col-sm-6 col-12">
+        <div class="form-group">
+            <label class="form-label">Descripción</label>
+            <input type="text" ngModel name="description" class="form-control">
+        </div>
+    </div>
+    <!-- Filtrar por categoría -->
+    <div class="col-lg-4 col-sm-6 col-12">
+        <div class="form-group">
+            <label class="form-label">Categoría</label>
+            <select ngModel name="category" class="form-select">
+                <option value="" selected>Cualquiera</option>
+                <option *ngFor="let category of categories" [value]="category.id">
+                    {{category.name+((category.active)?'':' - Inactiva')}}
+                </option>
+            </select>
+        </div>
+    </div>
+    <!-- Filtrar por empresa anunciante -->
+    <div class="col-lg-4 col-sm-6 col-12">
+        <div class="form-group">
+            <label class="form-label">Empresa</label>
+            <select ngModel name="enterprise" class="form-select">
+                <option value="" selected>Cualquiera</option>
+                <option *ngFor="let enterprise of enterprises" [value]="enterprise.id">
+                    {{enterprise.name+((enterprise.status===1)?'':' - Inactivo')}}
+                </option>
+            </select>
+        </div>
+    </div>
+    <!-- Filtrar por estado -->
+    <div class="col-lg-4 col-sm-6 col-12">
+        <div class="form-group">
+            <label class="form-label">Estatus</label>
+            <select ngModel name="status" class="form-select">
+                <option value="" selected>Cualquiera</option>
+                <option value="Created">Creada</option>
+                <option value="Active">Activa</option>
+                <option value="Deleted">Eliminada</option>
+            </select>
+        </div>
+    </div>
+    <div>
+        <!-- Enviar -->
+        <button type="submit" class="btn btn-info">
+            Filtrar
+        </button>
+    </div>
+</form>
+<hr>
+<!-- Mostrar todas las ofertas -->
+<div *ngIf="offers.length>0;else noOffers">
+    <table class="table table-dark table-striped table-responsive">
+        <thead>
+            <th class="align-middle text-center">Título</th>
+            <th class="align-middle text-center">Descripción</th>
+            <th class="align-middle text-center">Categoría</th>
+            <th class="align-middle text-center">Empresa</th>
+            <th class="align-middle text-center">Fecha</th>
+            <th class="align-middle text-center">Estatus</th>
+            <th class="align-middle text-center">Acciones</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let offer of offers | paginate: { itemsPerPage: 10, currentPage: page } ">
+                <td class="align-middle text-center">{{offer.name}}</td>
+                <td class="align-middle text-center">{{offer.description}}</td>
+                <td class="align-middle text-center">{{offer.category.name}}</td>
+                <td class="align-middle text-center"><a [routerLink]="['/user/show',offer.enterprise.id]" class="link-light">{{offer.enterprise.name}}</a></td>
+                <td class="align-middle text-center">{{offer.date}}</td>
+                <td class="align-middle text-center" [ngClass]="{'text-warning': offer.status==='Created','text-success': offer.status==='Active','text-danger': offer.status==='Deleted'}">{{offer.status}}</td>
+                <td class="text-center align-middle">
+                    <!-- Acciones -->
+                    <a [routerLink]="['/offer/show',offer.id]" role="button" class="btn btn-info mb-1">
+                        <mat-icon>info</mat-icon>
+                    </a>
+                    <button (click)="deleteOffer(offer.id)" type="button" class="btn btn-danger">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- Control de paginación -->
+    <pagination-controls *ngIf="offers.length>10" previousLabel="Anterior" nextLabel="Siguiente" (pageChange)="page=$event">
+    </pagination-controls>
+</div>
+<ng-template #noOffers>
+    <div class="alert alert-warning">
+        No hay ofertas que cumplan con los requisitos seleccionados.
+    </div>
+</ng-template>

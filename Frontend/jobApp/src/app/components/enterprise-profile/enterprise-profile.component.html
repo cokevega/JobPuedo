@@ -1,0 +1,112 @@
+<div class="main-body row align-items-center">
+    <div class="row justify-content-center gutters-sm">
+        <div class="col-xl-4 col-md-5 col-sm-7 col-12">
+            <div class="card mb-2">
+                <div class="card-body">
+                    <div class="d-flex flex-column align-items-center text-center">
+                        <img *ngIf="user && user.image;else noImage" [src]="baseUrl+'/files/'+user.image.id">
+                        <ng-template #noImage>
+                            <img src="assets/img/no-image.png">
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+            <!-- Editar imagen -->
+            <form enctype="multipart/form-data" *ngIf="showEditButton" class="mt-2" #photoForm="ngForm" (ngSubmit)="editPhoto()">
+                <input (change)="selectFile($event)" [disabled]="(!showEditButton)" type="file" class="form-control col-12" name="imageFile" ngModel required>
+                <div class="row">
+                    <span class="text-danger" *ngIf="showImageError">No se ha seleccionado imagen</span>
+                </div>
+                <button class="btn btn-info mt-2" type="submit">
+                    Cambiar foto de perfil
+                </button>
+            </form>
+        </div>
+        <div class="col-xl-8 col-md-7 col-12">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <!-- Editar información -->
+                    <form #editForm="ngForm" (ngSubmit)="editProfile()">
+                        <div class="row align-items-center">
+                            <!-- Nombre -->
+                            <div class="col-sm-3">
+                                <h4 class="mb-0">Nombre</h4>
+                            </div>
+                            <div class="col-sm-9">
+                                <input [disabled]="(!showEditButton)" [(ngModel)]="user.name" name="name" type="text" class="text-secondary form-control" required>
+                                <span *ngIf="validateField('name')" class="text-danger">
+                                    El nombre es obligatorio
+                                </span>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row align-items-center">
+                            <!-- Email -->
+                            <div class="col-sm-3">
+                                <h4 class="mb-0">Email</h4>
+                            </div>
+                            <div class="col-sm-9">
+                                <input [disabled]="(!showEditButton)" [(ngModel)]="user.email" name="email" type="email" class="text-secondary form-control" required>
+                                <span *ngIf="validateField('email')" class="text-danger">
+                                    El email es obligatorio y en formato válido
+                                </span>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row align-items-center">
+                            <!-- Nombre y apellidos de contacto -->
+                            <div class="col-sm-3">
+                                <h4 class="mb-0">Contacto</h4>
+                            </div>
+                            <div class="col-sm-9">
+                                <input [disabled]="(!showEditButton)" [(ngModel)]="user.contact_name" name="contact_name" type="text" class="text-secondary form-control" required>
+                                <input [disabled]="(!showEditButton)" [(ngModel)]="user.contact_last_name" name="contact_last_name" type="text" class="text-secondary form-control" required>
+                                <span *ngIf="validateField('contact_name') || validateField('contact_last_name')" class="text-danger">
+                                    El nombre de contacto es obligatorio
+                                </span>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row align-items-center">
+                            <!-- CIF -->
+                            <div class="col-sm-3">
+                                <h4 class="mb-0">CIF</h4>
+                            </div>
+                            <div class="col-sm-9">
+                                <input [disabled]="(!showEditButton)" [(ngModel)]="user.cif" name="cif" type="text" class="text-secondary form-control" pattern="^[A-Z]\d{8}$" required>
+                                <span *ngIf="validateField('cif')" class="text-danger">
+                                    El CIF es obligatorio y en formato A-00000000
+                                </span>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row align-items-center">
+                            <!-- Descripción -->
+                            <div class="col-sm-3">
+                                <h4 class="mb-0">Descripción</h4>
+                            </div>
+                            <div class="col-sm-9">
+                                <textarea [disabled]="(!showEditButton)" [(ngModel)]="user.description" name="description" class="text-secondary form-control" required minlength="50">
+                                    {{user.description}}
+                                </textarea>
+                                <span *ngIf="validateField('description')" class="text-danger">
+                                    La descripción es obligatoria y con mínimo 50 caracteres
+                                </span>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <!-- Enviar -->
+                            <div class="col-sm-12">
+                                <button [disabled]="editForm.invalid" *ngIf="showEditButton" type="submit" class="btn btn-info">Editar perfil</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-5">
+        <app-delete-account-button *ngIf="showEditButton" class="col-2" [user]="user"></app-delete-account-button>
+    </div>
+</div>
