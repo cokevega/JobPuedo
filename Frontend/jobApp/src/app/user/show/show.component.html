@@ -1,3 +1,4 @@
+<!-- User profile (CV if USER) -->
 <app-user-cv *ngIf="!userShowed?.enterprise;else enterpriseProfile" [user]="userShowed"></app-user-cv>
 <ng-template #enterpriseProfile>
     <app-enterprise-profile [user]="userShowed"></app-enterprise-profile>

@@ -3,7 +3,7 @@
     <form class="form-group" #formStudy="ngForm" (ngSubmit)="editStudy(study.id)">
         <div class="row align-items-center mb-3">
             <div class="col-12">
-                <!-- Título -->
+                <!-- Name -->
                 <h4 class="fw-bold">
                     Nombre/título
                 </h4>
@@ -17,7 +17,7 @@
         </div>
         <div class="row align-items-center mb-3">
             <div class="col-12">
-                <!-- Nivel de estudios -->
+                <!-- Title -->
                 <h4 class="fw-bold">
                     Nivel
                 </h4>
@@ -38,7 +38,7 @@
                 </span>
             </div>
             <div class="col-12 mt-3">
-                <!-- Escuela -->
+                <!-- School -->
                 <h4 class="fw-bold">
                     Institución
                 </h4>
@@ -50,7 +50,7 @@
                 </span>
             </div>
             <div class="col-12 mt-3">
-                <!-- Fecha de inicio -->
+                <!-- Begin date -->
                 <h4 class="fw-bold">
                     Inicio
                 </h4>
@@ -62,7 +62,7 @@
                 </span>
             </div>
             <div class="col-12 mt-3">
-                <!-- Fecha fin -->
+                <!-- End date -->
                 <h4 class="fw-bold">
                     Final
                 </h4>
@@ -75,7 +75,6 @@
             </div>
         </div>
         <div class="row">
-            <!-- Enviar -->
             <div class="col-3 col-xs-6">
                 <button [disabled]="formStudy?.invalid" type="submit" class="btn btn-success">
                     Editar

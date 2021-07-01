@@ -11,7 +11,7 @@
                     </div>
                 </div>
             </div>
-            <!-- Editar imagen -->
+            <!-- Edit image -->
             <form enctype="multipart/form-data" *ngIf="showEditButton" class="mt-2" #photoForm="ngForm" (ngSubmit)="editPhoto()">
                 <input (change)="selectFile($event)" [disabled]="(!showEditButton)" type="file" class="form-control col-12" name="imageFile" ngModel required>
                 <div class="row">
@@ -25,10 +25,10 @@
         <div class="col-xl-8 col-md-7 col-12">
             <div class="card mb-3">
                 <div class="card-body">
-                    <!-- Editar información -->
+                    <!-- Edit profile info -->
                     <form #editForm="ngForm" (ngSubmit)="editProfile()">
                         <div class="row align-items-center">
-                            <!-- Nombre -->
+                            <!-- Name -->
                             <div class="col-sm-3">
                                 <h4 class="mb-0">Nombre</h4>
                             </div>
@@ -54,7 +54,7 @@
                         </div>
                         <hr>
                         <div class="row align-items-center">
-                            <!-- Nombre y apellidos de contacto -->
+                            <!-- Contact name and last name -->
                             <div class="col-sm-3">
                                 <h4 class="mb-0">Contacto</h4>
                             </div>
@@ -81,7 +81,7 @@
                         </div>
                         <hr>
                         <div class="row align-items-center">
-                            <!-- Descripción -->
+                            <!-- Description -->
                             <div class="col-sm-3">
                                 <h4 class="mb-0">Descripción</h4>
                             </div>
@@ -96,7 +96,6 @@
                         </div>
                         <hr>
                         <div class="row">
-                            <!-- Enviar -->
                             <div class="col-sm-12">
                                 <button [disabled]="editForm.invalid" *ngIf="showEditButton" type="submit" class="btn btn-info">Editar perfil</button>
                             </div>

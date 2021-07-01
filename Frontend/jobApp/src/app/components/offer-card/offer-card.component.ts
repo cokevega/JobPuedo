@@ -1,4 +1,3 @@
-//Componente de presentación de una oferta
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
@@ -15,13 +14,9 @@ import { environment } from 'src/environments/environment';
 })
 export class OfferCardComponent implements OnInit {
 
-  //Recibir oferta
   @Input('offer') offer!: Offer;
-  //Recibir si es necesario mostrarla completa
   @Input('complete') complete: boolean = false;
-  //Recibir si es para inscribirse en ella
   @Input('apply') apply: boolean = false;
-  //Ofertas descartadas previamente
   rejectedOffers: string[] = [];
   id: number = 0;
   user!: User;
@@ -35,7 +30,7 @@ export class OfferCardComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    //Si hay sesión iniciada, se rescata el usuario
+    //Get the user, if authenticated
     if (sessionStorage.getItem('token')) {
       this.userService.whoAmI().subscribe((user: User) => {
         if (user) this.user = user;
@@ -43,7 +38,7 @@ export class OfferCardComponent implements OnInit {
     }
   }
 
-  //Descartar oferta: se usa el localStorage del navegador
+  //Reject offer: store it on local storage
   reject(id: number): void {
     this.alertService.confirmAction(
       'No volveremos a mostrarte esta oferta, siempre y cuando te conectes desde el mismo dispositivo y mismo navegador',
@@ -57,12 +52,11 @@ export class OfferCardComponent implements OnInit {
     });
   }
 
-  //¿Mostrar esta oferta?
   showThisOffer(id: number): boolean {
     return this.offerService.showThisOffer(id);
   }
 
-  //Eliminar oferta (soft delete)
+  //Delete offer (soft delete)
   deleteOffer(id: number) {
     this.alertService.confirmAction(
       'Esta acción es irreversible, no podrás seguir con el proceso de selección en esta oferta',
@@ -81,7 +75,6 @@ export class OfferCardComponent implements OnInit {
     });
   }
 
-  //Activar oferta
   activeOffer(id: number) {
     this.alertService.confirmAction(
       'A partir de este momento, esta oferta se hará pública y los usuarios podrán verla e inscribirse',
@@ -98,15 +91,14 @@ export class OfferCardComponent implements OnInit {
     });
   }
 
-  //Mostrar botón de inscribirse a esta oferta
   showApplyButton(offer: Offer): boolean {
     let show: boolean = true;
     if (this.user) show = this.offerService.showApplyButton(offer, this.user);
     return show;
   }
 
-  //Mostrar botón de descartar oferta
   showRejectButton(): boolean {
+    //Only reject offers at main page (/main/index)
     return this.route.snapshot.url[0].path === "index";
   }
 

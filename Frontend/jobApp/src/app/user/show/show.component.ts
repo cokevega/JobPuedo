@@ -1,4 +1,3 @@
-//Mostrar perfil
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
@@ -21,13 +20,13 @@ export class ShowComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    //Rescatar info de quien accede
+    //Get user information
     if(sessionStorage.getItem('user_id')) {
       this.userService.findUser(parseInt(sessionStorage.getItem('user_id')!)).subscribe((user:User)=>{
         this.user=user;
       });
     }
-    //Rescatar info del perfil al que se intenta acceder
+    //Get profile information
     this.userService.findUser(this.route.snapshot.params.id).subscribe((user:User)=>{
       this.userShowed=user;
     })

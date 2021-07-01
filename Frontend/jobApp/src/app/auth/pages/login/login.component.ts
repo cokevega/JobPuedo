@@ -1,4 +1,3 @@
-//Página de login
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
@@ -15,7 +14,6 @@ export class LoginComponent {
     private authService:AuthService
   ) { }
 
-  //Iniciar sesión
   login(form:NgForm) {
     this.authService.login(form);
   }

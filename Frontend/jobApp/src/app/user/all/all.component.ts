@@ -1,4 +1,3 @@
-//Buscador de trabajadores
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
@@ -16,7 +15,6 @@ export class AllComponent implements OnInit {
   users:User[]=[];
   baseUrl:string=environment.baseUrl;
   page:number=1;
-  //Rescatar formulario
   @ViewChild('searchForm') form!:NgForm;
 
   constructor(
@@ -24,10 +22,11 @@ export class AllComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    //Rescatar usuarios activos trabajadores y ordenar sus experiencias y formaciones por fecha
+    //Get active users (backend select only USER users)
     this.userService.findByStatus(1).subscribe((users:User[])=>{
         this.users=users;
         this.users.forEach((user:User)=>{
+          //Sort experiences and studies by end date
           if(user.experiences) this.userService.sortArrayByEnd(user.experiences);
           if(user.education) this.userService.sortArrayByEnd(user.education);
         });
@@ -35,7 +34,6 @@ export class AllComponent implements OnInit {
     );
   }
 
-  //Filtrar trabajadores
   filterWorkers() {
     this.userService.filterWorkers(this.form).subscribe((users:User[])=>{
       if(users) {

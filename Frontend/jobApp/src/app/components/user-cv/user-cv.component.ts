@@ -1,4 +1,3 @@
-//Mostrar perfil/CV de usuario trabajador y editar skills, idiomas, experiencias y formación
 import { Component, Input, OnInit, DoCheck } from '@angular/core';
 
 import { User } from 'src/app/interfaces/interfaces';
@@ -18,7 +17,6 @@ import { environment } from 'src/environments/environment';
 })
 export class UserCvComponent implements OnInit, DoCheck {
 
-  //Recibir usuario
   @Input('user') user!: User;
   bornDate!: string;
   showEditButton: boolean = false;
@@ -36,14 +34,14 @@ export class UserCvComponent implements OnInit, DoCheck {
   ) { }
 
   ngOnInit(): void {
-    //Obtener id
+    //Get user's id
     this.authService.getMyId().subscribe((id: number) => {
       if (id) this.id = id;
     });
   }
 
   ngDoCheck(): void {
-    //Habilitar los botones de edición si es el usuario dueño del perfil
+    //Show edit/add/delete buttons if the user is the owner of the profile
     if (this.id) {
       if (this.user?.id === this.id) this.showEditButton = true;
       this.bornDate = this.user?.born?.toString().substring(0, 10)!;
@@ -52,12 +50,11 @@ export class UserCvComponent implements OnInit, DoCheck {
     if (this.user && this.user.experiences) this.userService.sortArrayByEnd(this.user.experiences);
   }
 
-  //Recargar la página cuando se recibe una actualización (usuario emitido)
+  //Reload page when information changes
   userEmitted(user: User) {
     window.location.reload();
   }
 
-  //Eliminar experiencia
   deleteExperience(id: number) {
     this.alertService.confirmAction(
       'Se eliminará esta experiencia de tu CV y esta acción no podrá deshacerse',
@@ -76,7 +73,6 @@ export class UserCvComponent implements OnInit, DoCheck {
     });
   }
 
-  //Eliminar idioma
   deleteLanguage(id: number) {
     this.alertService.confirmAction(
       "Se eliminará este idioma y esta acción no podrá deshacerse",
@@ -95,7 +91,6 @@ export class UserCvComponent implements OnInit, DoCheck {
     });
   }
 
-  //Eliminar formación
   deleteStudy(id: number) {
     this.alertService.confirmAction(
       'Se eliminarán estos estudios y esta acción no podrá deshacerse',
@@ -114,7 +109,6 @@ export class UserCvComponent implements OnInit, DoCheck {
     });
   }
 
-  //Eliminar skill
   deleteSkill(id: number) {
     this.alertService.confirmAction(
       'Se eliminará esta skill y esta acción no podrá deshacerse',

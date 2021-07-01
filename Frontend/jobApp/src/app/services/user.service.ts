@@ -24,24 +24,20 @@ export class UserService {
     private http: HttpClient
   ) { }
 
-  //Buscar todos los usuarios
   findAll():Observable<User[]> {
     return this.http.get<User[]>(`${this.baseUrlAdmin}/all`);
   }
 
-  //Buscar usuarios por estatus
   findByStatus(status:number):Observable<User[]> {
     let params:Params={status};
     return this.http.get<User[]>(`${this.baseUrl}/all/status`,{params});
   }
 
-  //Buscar usuario por id
   findUser(id: number):Observable<User> {
     let params:Params={id};
     return this.http.get<User>(`${this.baseUrl}/find`,{params});
   }
 
-  //Editar perfil
   editProfile(user:User,editForm:NgForm) {
     return this.http.put<User>(`${this.baseUrl}/edit`,user).subscribe((user: User) => {
       if (user) {
@@ -54,38 +50,34 @@ export class UserService {
     });;
   }
 
-  //Editar imagen de perfil
   editImage(form:FormData):Observable<User> {
     return this.http.put<User>(`${this.baseUrl}/edit/image`,form);
   }
 
-  //Obtener el usuario conectado
+  //Get the authenticated user
   whoAmI():Observable<User> {
     return this.http.get<User>(`${this.baseUrl}/me`);
   }
 
-  //Eliminar usuario (soft delete)
+  //Delete user (soft delete)
   deleteUser(id:number):Observable<boolean> {
     let params:Params={id}
     return this.http.delete<boolean>(`${this.baseUrl}/delete`,{params});
   }
 
-  //Filtrar usuario
   filterUser(form:NgForm):Observable<User[]> {
     return this.http.post<User[]>(`${this.baseUrlAdmin}/filter`,form.value);
   }
 
-  //Eliminar usuario (definitivo)
+  //Delete user definitely
   deleteUserDefinitely(id:number):Observable<boolean> {
     return this.http.delete<boolean>(`${this.baseUrlAdmin}/delete/${id}`);
   }
 
-  //Hacer administrador a otro usuario
   getNewAdmin(id:number):Observable<User> {
     return this.http.get<User>(`${this.baseUrlAdmin}/admin/${id}`);
   }
 
-  //Ordenar array por fecha de fin
   sortArrayByEnd(component: Education[] | Experience[]) {
     component.sort((a:Education|Experience,b:Education|Experience)=>{
       if(a.end===null && b.end===null) return 0;
@@ -97,7 +89,6 @@ export class UserService {
     });
   }
 
-  //Filtrar trabajadores
   filterWorkers(data:NgForm):Observable<User[]> {
     return this.http.post<User[]>(`${this.baseUrl}/filter`,data.value);
   }

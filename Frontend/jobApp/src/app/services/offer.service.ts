@@ -26,13 +26,11 @@ export class OfferService {
     private router: Router
   ) { }
 
-  //Buscar por id
   findOfferById(id: number): Observable<Offer> {
     let params: Params = { id };
     return this.http.get<Offer>(`${this.baseUrl}/show`, { params });
   }
 
-  //Buscar por status
   getOffersByStatus(status: string): Observable<Offer[]> {
     let params: Params = {
       status
@@ -42,12 +40,10 @@ export class OfferService {
     });
   }
 
-  //Filtrar oferta
   getOfferSearched(form: NgForm): Observable<Offer[]> {
     return this.http.post<Offer[]>(`${this.baseUrl}/search`, form.value);
   }
 
-  //Crear oferta
   createOffer(form: FormGroup) {
     this.http.post<Offer>(`${this.baseUrl}/create`, JSON.stringify(form.value), {
       headers: this.headers
@@ -60,12 +56,11 @@ export class OfferService {
     });;
   }
 
-  //Obtener mis ofertas (para la sección de dashboard)
+  //Get offers (applied offers if USER, created offers if ENTERPRISE)
   myOffers(): Observable<Offer[]> {
     return this.http.get<Offer[]>(`${this.baseUrl}/dashboard`);
   }
 
-  //Editar oferta
   editOffer(offer: Offer) {
     this.http.put<Offer>(`${this.baseUrl}/edit`, offer).subscribe((offer: Offer) => {
       if (offer) {
@@ -76,29 +71,26 @@ export class OfferService {
     });
   }
 
-  //Eliminar oferta (soft delete)
+  //Delete offer (soft delete)
   deleteOffer(id: number): Observable<Offer> {
     let params: Params = { id };
     return this.http.delete<Offer>(`${this.baseUrl}/delete`, { params });
   }
 
-  //Activar oferta
   activeOffer(id: number): Observable<Offer> {
     let params: Params = { id };
     return this.http.get<Offer>(`${this.baseUrl}/activate`, { params });
   }
 
-  //Obtener todas las ofertas
   allOffers(): Observable<Offer[]> {
     return this.http.get<Offer[]>(`${this.baseUrlAdmin}/all`);
   }
 
-  //Filtrar ofertas (admin)
   filterOffersAdmin(form: NgForm): Observable<Offer[]> {
     return this.http.post<Offer[]>(`${this.baseUrlAdmin}/filter`, form.value);
   }
 
-  //Eliminar oferta (definitivo)
+  //Delete offer definitely (admin)
   deleteOfferDefinitely(id: number) {
     this.alertService.confirmAction(
       'Eliminar esta oferta supondrá la eliminación de todas sus inscripciones también. Esta acción no podrá deshacerse',
@@ -116,7 +108,6 @@ export class OfferService {
     })
   }
 
-  //Descartar oferta
   rejectOffer(id: number) {
     let rejectedOffers: string[] = [];
     if (localStorage.getItem('rejectedOffers')) rejectedOffers = localStorage.getItem('rejectedOffers')?.split(',')!;
@@ -126,7 +117,7 @@ export class OfferService {
     this.alertService.successWithTitle("Descartada", "Has descartado la oferta, no volveremos a mostrártela");
   }
 
-  //Mostrar esta oferta si no está descartada
+  //Show not rejected offer
   showThisOffer(id: number): boolean {
     let rejectedOffers: string[] = [];
     if (localStorage.getItem('rejectedOffers')) rejectedOffers = localStorage.getItem('rejectedOffers')?.split(',')!;
@@ -134,7 +125,6 @@ export class OfferService {
     return showOffer;
   }
 
-  //Mostrar botón de inscribirse a oferta
   showApplyButton(offer: Offer, user: User): boolean {
     let show: boolean = true;
     if (user.enterprise) show = false;

@@ -14,7 +14,7 @@ export class AlertService {
     private router: Router
   ) { }
 
-  //Alerta de éxito
+  //Success alert
   successWithTitle(title: string, text: string):Promise<SweetAlertResult<any>> {
     return Swal.fire({
       position: 'center',
@@ -26,7 +26,7 @@ export class AlertService {
     });
   }
 
-  //Alerta de éxito
+  //Success alert
   success(message: string):Promise<SweetAlertResult<any>> {
     return Swal.fire({
       position: 'center',
@@ -37,7 +37,7 @@ export class AlertService {
     });
   }
 
-  //Alerta de error
+  //Error alert
   fail(message: string):Promise<SweetAlertResult<any>> {
     return Swal.fire({
       position: 'center',
@@ -48,7 +48,7 @@ export class AlertService {
     });
   }
 
-  //Alerta de confirmación de la acción que va a realizarse
+  //Confirm action alert
   confirmAction(text: string = '', confirmButtonText: string = 'Sí, seguro',
     cancelButtonColor: string = environment.redButton, confirmButtonColor: string = environment.blueButton)
     : Promise<SweetAlertResult<any>> {
@@ -64,7 +64,7 @@ export class AlertService {
     });
   }
 
-  //Alerta de acceso denegado
+  //Denied access alert and redirection
   unauthorizedGuard(message: string): Promise<boolean> {
     this.fail(message);
     return this.router.navigate(["/main/index"]);

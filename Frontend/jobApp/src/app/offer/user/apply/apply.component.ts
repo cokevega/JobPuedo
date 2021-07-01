@@ -19,7 +19,7 @@ export class ApplyComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    //Rescatar información de la oferta
+    //Offer information
     this.offerService.findOfferById(this.route.snapshot.params.id).subscribe((offer:Offer)=>{
       this.offer=offer;
     });

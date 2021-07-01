@@ -1,4 +1,3 @@
-//Dashboard de mis ofertas (ofertas a las que me he inscrito si soy trabajador y ofertas subidas si soy empresa)
 import { Component, DoCheck, OnInit } from '@angular/core';
 
 import { Application, Offer, Role, User } from 'src/app/interfaces/interfaces';

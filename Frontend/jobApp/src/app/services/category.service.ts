@@ -21,17 +21,15 @@ export class CategoryService {
     private http: HttpClient
   ) { }
 
-  //Obtener todas las categorías (activas)
+  //Get all active categories
   getAllCategories(): Observable<Category[]> {
     return this.http.get<Category[]>(`${this.baseUrl}/all`);
   }
 
-  //Obtener todas las categorías (admin)
   getAllCategoriesAdmin(): Observable<Category[]> {
     return this.http.get<Category[]>(`${this.baseUrlAdmin}/all`);
   }
 
-  //Añadir categoría
   addCategory(data: NgForm) {
     this.alertService.confirmAction(
       'Nada más añadir esta categoría los usuarios y empresas podrán verla y utilizarla',
@@ -49,7 +47,6 @@ export class CategoryService {
     });
   }
 
-  //Editar categoría
   editCategory(category: Category) {
     this.http.put<Category>(`${this.baseUrlAdmin}/edit`, category).subscribe((category: Category) => {
       if (category) {
@@ -60,7 +57,7 @@ export class CategoryService {
     });
   }
 
-  //Eliminar categoría (soft delete)
+  //Delete category (soft delete)
   deleteCategory(id: number) {
     this.alertService.confirmAction(
       'Esta acción no podrá deshacerse y los usuarios dejarán de ver esta categoría, pero no se borrarán las ofertas que pertenecen a esta categoría',
@@ -80,7 +77,7 @@ export class CategoryService {
     });
   }
 
-  //Reactivar categoría inactiva
+  //Undo soft delete
   reactivateCategory(id: number) {
     this.alertService.confirmAction(
       'Reactivar la categoría supondrá que los usuarios y las empresas puedan volver a verla y seleccionarla',

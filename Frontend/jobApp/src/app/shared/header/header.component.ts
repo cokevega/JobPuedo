@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements DoCheck {
+  //Show buttons depending on the user's role/authentication
   logged:boolean=false;
   showRegisterButton: boolean = false;
   showLoginButton: boolean = false;

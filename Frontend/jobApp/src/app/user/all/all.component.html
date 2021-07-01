@@ -1,19 +1,18 @@
 <div class="container-fluid mt-5">
     <h1 class="text-center">Buscador de trabajadores</h1>
-    <!-- Filtrar trabajadores -->
+    <!-- Filter workers -->
     <form #searchForm="ngForm" (ngSubmit)="filterWorkers()" class="row justify-content-center">
-        <!-- Filtrar por experiencias laborales -->
+        <!-- By experiences -->
         <div class="form-group col-xl-4 col-md-6 col-sm-8 col-12 text-center">
             <label class="form-label fw-bold">Experiencias laborales</label>
             <input class="form-control" type="text" name="experiences" ngModel>
         </div>
-        <!-- Filtrar por estudios -->
+        <!-- By studies -->
         <div class="form-group col-xl-4 col-md-6 col-sm-8 col-12 text-center">
             <label class="form-label fw-bold">Estudios</label>
             <input class="form-control" type="text" name="education" ngModel>
         </div>
         <div class="row">
-            <!-- Enviar -->
             <div class="text-center">
                 <button type="submit" class="btn btn-primary">
                     Filtrar
@@ -23,7 +22,7 @@
     </form>
     <hr>
     <div *ngIf="users && users.length>0;else noUsers">
-        <!-- Mostrar trabajadores -->
+        <!-- Show workers -->
         <div class="row justify-content-center">
             <div class="col-12 col-xl-4 col-lg-6 col-sm-8 mb-3 justify-content-center" *ngFor=" let user of users | paginate: {itemsPerPage: 6,currentPage: page}">
                 <div class="card bg-light mb-3 px-3">
@@ -84,11 +83,11 @@
                     </div>
                 </div>
             </div>
-            <!-- Control de paginación -->
             <pagination-controls *ngIf="users.length>6" previousLabel="Anterior" nextLabel="Siguiente" (pageChange)="page=$event">
             </pagination-controls>
         </div>
     </div>
+    <!-- No workers found -->
     <ng-template #noUsers>
         <div class="alert alert-warning">
             No hay usuarios con los requisitos especificados

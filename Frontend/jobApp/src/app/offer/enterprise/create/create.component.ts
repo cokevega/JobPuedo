@@ -1,4 +1,3 @@
-//Crear una oferta
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -22,7 +21,6 @@ export class CreateComponent implements OnInit {
 
   check:boolean=true;
   categories: Category[] = [];
-  //Rescatar formulario
   form:FormGroup=this.fb.group({
     name: ['',Validators.required],
     salary: ['',[Validators.required,Validators.min(0)]],
@@ -33,18 +31,16 @@ export class CreateComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    //Rescatar todas las categorías activas
+    //Show all categories
     this.categoryService.getAllCategories().subscribe((categories: Category[]) => {
       this.categories = categories;
     });
   }
 
-  //Validar campo
   validateField(field:string):boolean {
     return this.form.controls[field].invalid && this.form.controls[field].touched;
   }
 
-  //Crear oferta
   createOffer() {
     this.offerService.createOffer(this.form);
   }

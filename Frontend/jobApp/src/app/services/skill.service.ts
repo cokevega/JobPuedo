@@ -18,17 +18,14 @@ export class SkillService {
     private http:HttpClient
   ) { }
 
-  //Añadir skill
   addSkill(form:NgForm):Observable<User> {
     return this.http.post<User>(`${this.baseUrl}/add`,form.value);
   }
 
-  //Editar skill
   editSkill(form:NgForm,id:number):Observable<User> {
     return this.http.put<User>(`${this.baseUrl}/edit/${id}`,form.value);
   }
 
-  //Eliminar skill
   deleteSkill(id:number):Observable<User> {
     return this.http.delete<User>(`${this.baseUrl}/delete/${id}`);
   }

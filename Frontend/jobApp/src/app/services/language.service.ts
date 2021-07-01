@@ -18,17 +18,14 @@ export class LanguageService {
     private http:HttpClient
   ) { }
 
-  //Añadir idioma
   addLanguage(form:NgForm):Observable<User> {
     return this.http.post<User>(`${this.baseUrl}/add`,form.value);
   }
 
-  //Editar idioma
   editLanguage(form:NgForm,id:number):Observable<User> {
     return this.http.put<User>(`${this.baseUrl}/edit/${id}`,form.value);
   }
 
-  //Eliminar idioma
   deleteLanguage(id:number):Observable<User> {
     return this.http.delete<User>(`${this.baseUrl}/delete/${id}`);
   }

@@ -2,7 +2,7 @@
     <h2>Añadir idioma</h2>
     <form class="form-group" #formLanguage="ngForm" (ngSubmit)="addLanguage()">
         <div class="row align-items-center mb-3">
-            <!-- Nombre idioma -->
+            <!-- Name -->
             <div class="col-12">
                 <h4 class="fw-bold">
                     Idioma
@@ -16,7 +16,7 @@
             </div>
         </div>
         <div class="row align-items-center mb-3">
-            <!-- Nivel -->
+            <!-- Level -->
             <div class="col-12">
                 <h4 class="fw-bold">
                     Nivel
@@ -35,7 +35,6 @@
             </div>
         </div>
         <div class="row">
-            <!-- Enviar -->
             <div class="col-3 col-xs-6">
                 <button [disabled]="formLanguage?.invalid" type="submit" class="btn btn-success">
                     Agregar

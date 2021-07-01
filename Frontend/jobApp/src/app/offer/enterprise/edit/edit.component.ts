@@ -1,4 +1,3 @@
-//Editar una oferta
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -20,29 +19,26 @@ export class EditComponent implements OnInit {
     private route:ActivatedRoute,
   ) { }
 
-  //Rescatar formulario
   @ViewChild('form') form!:NgForm;
   categories: Category[] = [];
   offer!:Offer;
   id:number=this.route.snapshot.params.id;
 
   ngOnInit(): void {
-    //Rescatar categorías activas
+    //All categories
     this.categoryService.getAllCategories().subscribe((categories: Category[]) => {
       this.categories = categories;
     });
-    //Rescatar información de la oferta
+    //Offer information
     this.offerService.findOfferById(this.id).subscribe((offer:Offer)=>{
       this.offer=offer;
     })
   }
 
-  //Editar oferta
   editOffer() {
     this.offerService.editOffer(this.offer);
   }
 
-  //Validar campo
   validateField(field:string) {
     return this.form?.controls[field]?.invalid && this.form?.controls[field]?.touched;
   }

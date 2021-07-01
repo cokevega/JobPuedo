@@ -1,4 +1,4 @@
-//Clase que intercepta todas las peticiones entrantes y salientes para centralizar actuaciones
+//Intercept all petitions
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
@@ -27,13 +27,14 @@ export class AuthInterceptorService implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if(sessionStorage.getItem('token')) this.token=sessionStorage.getItem('token')!;
-    if(!this.token) return this.handleRequest(next.handle(req));
-    const headers=req.clone({
+    if(!this.token) return this.handleRequest(next.handle(req));//Send petition without changes
+    const headers=req.clone({//Add token
       headers: req.headers.set('Authorization',`Bearer ${this.token}`)
     });
     return this.handleRequest(next.handle(headers));
   }
 
+  //Handle errors
   handleRequest(request:Observable<HttpEvent<any>>):Observable<HttpEvent<any>> {
     return request.pipe(
       catchError((err:any)=>{

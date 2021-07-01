@@ -1,4 +1,3 @@
-//Añadir idioma
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
@@ -13,11 +12,8 @@ import { LanguageService } from 'src/app/services/language.service';
 })
 export class AddLanguageComponent {
 
-  //Recibir usuario
   @Input('user') user!:User;
-  //Rescatar formulario
   @ViewChild('formLanguage') formLanguage!: NgForm;
-  //Emitir nuevo usuario
   @Output() emitUser=new EventEmitter<User>();
 
   constructor(
@@ -25,20 +21,18 @@ export class AddLanguageComponent {
     private languageService:LanguageService
   ) { }
   
-  //Validar campo
   validateFieldLanguage(field: string) {
     return this.formLanguage?.controls[field]?.invalid && this.formLanguage?.controls[field]?.touched;
   }
 
-  //Añadir idioma
   addLanguage() {
     this.languageService.addLanguage(this.formLanguage).subscribe((user: User) => {
       if (user) {
         this.alertService.success("Idioma agregado con éxito").then((result)=>{
           this.emitUser.emit(user);
-        })
+        });
       }
-    })
+    });
   }
 
 }

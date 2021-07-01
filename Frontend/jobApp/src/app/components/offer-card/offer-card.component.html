@@ -1,28 +1,27 @@
 <mat-card class="mb-5" *ngIf="offer && showThisOffer(offer.id)">
-    <!-- Información de la oferta -->
+    <!-- Offer information -->
     <mat-card-header class="p-2">
         <mat-card-title>{{offer.name}}</mat-card-title>
         <mat-card-subtitle>{{offer.category.name}}</mat-card-subtitle>
         <mat-card-subtitle>{{offer.date}}</mat-card-subtitle>
-        <!-- Conocer usuarios inscritos -->
+        <!-- Number of applications -->
         <mat-card-subtitle *ngIf="user?.id===offer.enterprise.id"><a [routerLink]="['/offer/enterprise/applications',offer.id]" class="link-info">{{offer.applications?.length}} inscritos</a></mat-card-subtitle>
     </mat-card-header>
-    <!-- Cuando la información ha de ser completa se muestra también la imagen de la empresa anunciante -->
+    <!-- If the offer information must be complete, show offer 'image' field -->
     <div *ngIf="complete">
         <img mat-card-image *ngIf="offer.enterprise.image;else noImage" [src]="baseUrl+'/files/'+offer.enterprise.image.id" alt="">
         <ng-template #noImage>
             <img mat-card-image src="assets/img/no-image.png">
         </ng-template>
     </div>
-    <!-- Más información de la oferta -->
     <mat-card-content class="px-4">{{offer.description}}</mat-card-content>
-    <!-- Cuando la información ha de ser completa se muestra también el campo details -->
+    <!-- If offer information must be complete, show also 'details' field -->
     <div *ngIf="complete">
         <hr>
         <mat-card-content [innerHTML]="offer.details.toString()">
         </mat-card-content>
     </div>
-    <!-- Acciones: se muestran unas opciones u otras en función del rol y de si es el usuario creador de la oferta -->
+    <!-- Actions: depending on the user's role, applications and/or the offer owner -->
     <mat-card-actions class="px-4 d-flex flex-wrap justify-content-center align-items-center">
         <button *ngIf="user?.id!==offer.enterprise.id && !apply && showRejectButton()" type="button" class="btn mt-2 ml-2 btn-danger" (click)="reject(offer.id)">
             Descartar

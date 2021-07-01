@@ -1,4 +1,3 @@
-//Panel del administrador para ofertas
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
@@ -15,9 +14,7 @@ import { UserService } from 'src/app/services/user.service';
 export class OffersComponent implements OnInit {
 
   offers: Offer[] = [];
-  //Establecer primera página
   page: number = 1;
-  //Recuperar formulario
   @ViewChild('searchForm') searchForm!: NgForm;
   categories: Category[] = [];
   enterprises: User[] = [];
@@ -29,24 +26,23 @@ export class OffersComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    //Rescatar todas las ofertas
+    //Show all offers
     this.offerService.allOffers().subscribe((offers: Offer[]) => {
       if (offers) this.offers = offers;
     });
-    //Rescatar todas las categorías
+    //Show all categories
     this.categoryService.getAllCategoriesAdmin().subscribe((categories: Category[]) => {
       if (categories) this.categories = categories;
     });
-    //Rescatar todos los usuarios
+    //Show all users
     this.userService.findAll().subscribe((users: User[]) => {
       if (users) {
-        //Filtrar y obtener solo las empresas
+        //Get only ENTERPRISE users
         this.enterprises = users.filter((us: User) => us.enterprise);
       }
     })
   }
 
-  //Filtrar ofertas
   filterOffers() {
     if (this.searchForm.pristine) return;
     this.offerService.filterOffersAdmin(this.searchForm).subscribe((offers: Offer[]) => {
@@ -54,7 +50,7 @@ export class OffersComponent implements OnInit {
     });
   }
 
-  //Eliminar oferta (definitivo)
+  //Delete offer DEFINITELY
   deleteOffer(id: number) {
     this.offerService.deleteOfferDefinitely(id);
   }

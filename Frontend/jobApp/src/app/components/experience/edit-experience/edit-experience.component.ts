@@ -13,13 +13,9 @@ import { ExperienceService } from 'src/app/services/experience.service';
 })
 export class EditExperienceComponent {
 
-  //Rescatar formulario
   @ViewChild('formExperience') formExperience!: NgForm;
-  //Recibir experiencia
   @Input('experience') experience!: Experience;
-  //Recibir usuario
   @Input('user') user!: User;
-  //Emitir nuevo usuario
   @Output() emitUser = new EventEmitter<User>();
 
   constructor(
@@ -27,12 +23,10 @@ export class EditExperienceComponent {
     private alertService: AlertService
   ) { }
 
-  //Validar campo
   validateFieldExperience(field: string) {
     return this.formExperience?.controls[field]?.invalid && this.formExperience?.controls[field]?.touched;
   }
 
-  //Editar experiencia
   editExperience() {
     if (this.formExperience.pristine) return;
     this.experienceService.editExperience(this.formExperience, this.experience.id).subscribe((user: User) => {

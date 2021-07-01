@@ -11,7 +11,7 @@
                     </div>
                 </div>
             </div>
-            <!-- Imagen de perfil -->
+            <!-- Profile image -->
             <form autocomplete="off" enctype="multipart/form-data" *ngIf="showEditButton" class="mt-2" #photoForm="ngForm" (ngSubmit)="editPhoto()">
                 <input (change)="selectFile($event)" [disabled]="(!showEditButton)" type="file" class="form-control col-12" name="imageFile" ngModel required>
                 <div class="row">
@@ -26,7 +26,7 @@
             <div class="card mb-3">
                 <div class="card-body">
                     <form #editForm="ngForm" (ngSubmit)="editProfile()">
-                        <!-- Fecha de nacimiento -->
+                        <!-- Born date -->
                         <div class="row align-items-center">
                             <div class="col-sm-3">
                                 <h4 class="mb-0">Fecha de nacimiento</h4>
@@ -52,7 +52,7 @@
                             </div>
                         </div>
                         <hr>
-                        <!-- Nombre y apellidos -->
+                        <!-- Name and last name -->
                         <div class="row align-items-center">
                             <div class="col-sm-3">
                                 <h4 class="mb-0">Nombre</h4>
@@ -66,7 +66,7 @@
                             </div>
                         </div>
                         <hr>
-                        <!-- Teléfono -->
+                        <!-- Phone -->
                         <div class="row align-items-center">
                             <div class="col-sm-3">
                                 <h4 class="mb-0">Teléfono (opcional)</h4>
@@ -77,7 +77,6 @@
                             </div>
                         </div>
                         <hr>
-                        <!-- Enviar -->
                         <div class="row">
                             <div class="col-sm-12">
                                 <button *ngIf="showEditButton" type="submit" class="btn btn-info">Editar perfil</button>
@@ -87,7 +86,7 @@
                 </div>
             </div>
         </div>
-        <!-- Eliminar cuenta (soft delete) -->
+        <!-- Delete user (soft delete) -->
         <div class="col-5 col-md-3 col-xl-2 mt-5">
             <app-delete-account-button [user]="user"></app-delete-account-button>
         </div>

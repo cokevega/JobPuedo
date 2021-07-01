@@ -31,14 +31,12 @@ export class AuthService {
     private alertService: AlertService
   ) { }
 
-  //Registrar nuevo usuario
   register(data: FormGroup) {
     return this.http.post<LoginResponse>(`${this.baseUrl}/register`, data.value).subscribe((data:LoginResponse)=>{
       if(data) this.loggedUser(data);
     });
   }
 
-  //Iniciar sesión
   login(data: NgForm) {
     let options = { headers: this.headers };
     let formValue = JSON.stringify(data.value);
@@ -47,7 +45,7 @@ export class AuthService {
     });
   }
 
-  //Si el login es correcto se almacenan los datos del usuario y se le redirige a su dashboard
+  //If login is correct, id and token are stored
   loggedUser(data:LoginResponse) {
     sessionStorage.setItem('token', data.accessToken);
     sessionStorage.setItem('user_id',data.id.toString());
@@ -56,7 +54,6 @@ export class AuthService {
     });
   }
 
-  //Cerrar sesión
   logout() {
     if (sessionStorage.getItem('token')) {
       sessionStorage.removeItem('token');
@@ -93,11 +90,12 @@ export class AuthService {
     return this.http.get<boolean>(`${this.baseUrlAccess}/profile`, { params });
   }
 
-  //Obtener mi id
+  //Get user's id
   getMyId(): Observable<number> {
     return this.http.get<number>(`${this.baseUrl}/id`);
   }
 
+  //Guard user enterprise
   validateUserEnterprise(): Observable<boolean> {
     return this.http.get<boolean>(`${this.baseUrlAccess}/authenticated`);
   }

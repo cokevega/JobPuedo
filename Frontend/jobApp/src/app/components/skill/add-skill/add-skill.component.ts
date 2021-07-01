@@ -1,4 +1,3 @@
-//Añadir skill
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { User } from 'src/app/interfaces/interfaces';
@@ -12,11 +11,8 @@ import { SkillService } from 'src/app/services/skill.service';
 })
 export class AddSkillComponent {
 
-  //Recibir usuario
   @Input('user') user!: User;
-  //Rescatar formulario
   @ViewChild('formSkill') formSkill!: NgForm;
-  //Emitir nuevo usuario
   @Output() emitUser = new EventEmitter<User>();
 
   constructor(
@@ -24,12 +20,10 @@ export class AddSkillComponent {
     private skillService: SkillService
   ) { }
 
-  //Validar campo
   validateFieldSkill(field: string) {
     return this.formSkill?.controls[field]?.invalid && this.formSkill?.controls[field]?.touched;
   }
 
-  //Añadir skill
   addSkill() {
     this.skillService.addSkill(this.formSkill).subscribe((user: User) => {
       if (user) {

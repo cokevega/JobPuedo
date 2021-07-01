@@ -1,4 +1,3 @@
-//Filtrar ofertas en el buscador del inicio
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
@@ -12,9 +11,7 @@ import { OfferService } from 'src/app/services/offer.service';
   styleUrls: ['./search-form.component.css']
 })
 export class SearchFormComponent implements OnInit {
-  //Emitir ofertas filtradas
   @Output() offersEmitted = new EventEmitter<Offer[]>();
-  //Rescatar formulario
   @ViewChild('searchForm') form!:NgForm;
   categories: Category[] = [];
   offers: Offer[] = [];
@@ -27,7 +24,7 @@ export class SearchFormComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    //Rescatar todas las categorías activas y cargar los tooltip con información de las categorías
+    //Show all active categories and load tooltip text
     this.categoryService.getAllCategories().subscribe((categories: Category[]) => {
       if(categories) {
         this.categories = categories;
@@ -38,14 +35,13 @@ export class SearchFormComponent implements OnInit {
     });
   }
 
-  //Filtrar ofertas
+  //Filter offers (category and text)
   searchOffers(form: NgForm):void {
     this.offerService.getOfferSearched(form).subscribe((offers:Offer[])=>{
       if(offers) this.handleSubscription(offers);
     });
   }
 
-  //Resetear form y volver a mostrar todas
   resetOffers(form: NgForm):void {
     form.reset();
     this.offerService.getOffersByStatus("Active").subscribe((offers: Offer[]) => {
@@ -53,13 +49,12 @@ export class SearchFormComponent implements OnInit {
     });
   }
 
-  //Emitir ofertas filtradas
+  //Emit Output event with the offers found
   handleSubscription(offers: Offer[]):void {
     this.offers = offers;
     this.offersEmitted.emit(this.offers);
   }
 
-  //Cambiar tooltip
   changeTooltipMessage() {
     this.tooltipMessage=this.categoryDescription.get(parseInt(this.form.controls['category'].value))!;
   }

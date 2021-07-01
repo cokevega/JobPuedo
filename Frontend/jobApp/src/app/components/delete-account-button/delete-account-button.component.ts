@@ -1,4 +1,3 @@
-//Botón de eliminar mi cuenta
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -22,7 +21,7 @@ export class DeleteAccountButtonComponent {
     private userService: UserService
   ) { }
 
-  //Eliminar cuenta (soft delete)
+  //Delete user (soft delete)
   deleteUser() {
     this.alertService.confirmAction(
       'Tu cuenta quedará inactiva a partir de este momento hasta que decidas reactivarla',

@@ -1,4 +1,3 @@
-//Panel del administrador para usuarios
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
@@ -15,10 +14,8 @@ import { environment } from 'src/environments/environment';
 export class UsersComponent implements OnInit {
 
   users:User[]=[];
-  //Establecer página por defecto
   page:number=1;
   baseUrl:string=environment.baseUrl;
-  //Recuperar formulario
   @ViewChild('searchForm') searchForm!:NgForm;
 
   constructor(
@@ -27,13 +24,12 @@ export class UsersComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    //Rescatar todos los usuarios
+    //Show all users
     this.userService.findAll().subscribe((users:User[])=>{
       if(users) this.users=users;
     });
   }
 
-  //Hacer administrador
   newAdmin(id:number) {
     this.alertService.confirmAction(
       'Esta acción no podrá deshacerse y este usuario pasará a tener permisos de administrador para actuar sobre categorías, eliminar ofertas y usuarios y elegir nuevos administradores',
@@ -51,7 +47,7 @@ export class UsersComponent implements OnInit {
     });
   }
 
-  //Eliminar usuario (definitivo)
+  //Delete user DEFINITELY
   deleteUser(id:number) {
     this.alertService.confirmAction(
       'Serán eliminadas todas las inscripciones y ofertas de este usuario y no podrán recuperarse',
@@ -71,12 +67,11 @@ export class UsersComponent implements OnInit {
     })
   }
 
-  //¿Es administrador?
   isAdmin(user:User):boolean {
     return user.roles.find((role:Role)=>role.name==='ROLE_ADMIN')!==undefined;
   }
 
-  //Filtrar usuarios
+  //Filter users
   searchUsers() {
     if(this.searchForm.pristine) return;
     this.userService.filterUser(this.searchForm).subscribe((users:User[])=>{

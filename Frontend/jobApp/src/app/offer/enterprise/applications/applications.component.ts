@@ -1,4 +1,3 @@
-//Inscripciones a una oferta
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
@@ -24,13 +23,12 @@ export class ApplicationsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    //Recuperar inscripciones a la oferta
+    //Get offer's applications
     this.applicationService.getApplicationsFromOffer(this.route.snapshot.params.id).subscribe((applications:Application[])=>{
       this.applications=applications.filter((app:Application)=>app.status!=='Rechazada');
     });
   }
 
-  //Aceptar candidatura
   accept(application_id:number) {
     this.alertService.confirmAction(
       'Estás a punto de aceptar esta candidatura, este trabajador podrá ver que le has aceptado, así como tu email',
@@ -48,7 +46,6 @@ export class ApplicationsComponent implements OnInit {
     });
   }
 
-  //Rechazar candidatura
   reject(application_id:number) {
     this.alertService.confirmAction(
       'Estás a punto de rechazar a este trabajador y no volver a ver esta candidatura',

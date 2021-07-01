@@ -1,23 +1,23 @@
 <h1 class="text-center">Administrar ofertas</h1>
 <hr>
-<!-- Filtrar ofertas -->
+<!-- Filter offers -->
 <h2 class="text-center">Filtrar</h2>
 <form #searchForm="ngForm" class="row mb-2 align-items-center" (ngSubmit)="filterOffers()">
-    <!-- Filtrar por título -->
+    <!-- By title -->
     <div class="col-lg-4 col-sm-6 col-12">
         <div class="form-group">
             <label class="form-label">Título</label>
             <input type="text" ngModel name="name" class="form-control">
         </div>
     </div>
-    <!-- Filtrar por descripción -->
+    <!-- By description -->
     <div class="col-lg-4 col-sm-6 col-12">
         <div class="form-group">
             <label class="form-label">Descripción</label>
             <input type="text" ngModel name="description" class="form-control">
         </div>
     </div>
-    <!-- Filtrar por categoría -->
+    <!-- By category -->
     <div class="col-lg-4 col-sm-6 col-12">
         <div class="form-group">
             <label class="form-label">Categoría</label>
@@ -29,7 +29,7 @@
             </select>
         </div>
     </div>
-    <!-- Filtrar por empresa anunciante -->
+    <!-- By enterprise -->
     <div class="col-lg-4 col-sm-6 col-12">
         <div class="form-group">
             <label class="form-label">Empresa</label>
@@ -41,7 +41,7 @@
             </select>
         </div>
     </div>
-    <!-- Filtrar por estado -->
+    <!-- By status -->
     <div class="col-lg-4 col-sm-6 col-12">
         <div class="form-group">
             <label class="form-label">Estatus</label>
@@ -54,14 +54,13 @@
         </div>
     </div>
     <div>
-        <!-- Enviar -->
         <button type="submit" class="btn btn-info">
             Filtrar
         </button>
     </div>
 </form>
 <hr>
-<!-- Mostrar todas las ofertas -->
+<!-- Show all offers -->
 <div *ngIf="offers.length>0;else noOffers">
     <table class="table table-dark table-striped table-responsive">
         <thead>
@@ -82,7 +81,7 @@
                 <td class="align-middle text-center">{{offer.date}}</td>
                 <td class="align-middle text-center" [ngClass]="{'text-warning': offer.status==='Created','text-success': offer.status==='Active','text-danger': offer.status==='Deleted'}">{{offer.status}}</td>
                 <td class="text-center align-middle">
-                    <!-- Acciones -->
+                    <!-- Actions -->
                     <a [routerLink]="['/offer/show',offer.id]" role="button" class="btn btn-info mb-1">
                         <mat-icon>info</mat-icon>
                     </a>
@@ -93,7 +92,6 @@
             </tr>
         </tbody>
     </table>
-    <!-- Control de paginación -->
     <pagination-controls *ngIf="offers.length>10" previousLabel="Anterior" nextLabel="Siguiente" (pageChange)="page=$event">
     </pagination-controls>
 </div>

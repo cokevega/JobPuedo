@@ -1,10 +1,10 @@
 <h1 class="text-center">Administrar usuarios</h1>
 <hr>
-<!-- Filtrar usuarios -->
+<!-- Filtrar users -->
 <h2 class="text-center">Filtrar</h2>
 <form #searchForm="ngForm" (ngSubmit)="searchUsers()" class="row mb-2">
     <div class="col-lg-3 col-sm-6 col-12">
-        <!-- Filtrar por rol -->
+        <!-- By role -->
         <div class="form-group">
             <label class="form-label">Tipo de usuario</label>
             <select ngModel class="form-select" name="role">
@@ -16,21 +16,21 @@
         </div>
     </div>
     <div class="col-lg-3 col-sm-6 col-12">
-        <!-- Filtrar por nombre -->
+        <!-- By name -->
         <div class="form-group">
             <label class="form-label">Nombre</label>
             <input ngModel type="text" name="name" class="form-control">
         </div>
     </div>
     <div class="col-lg-3 col-sm-6 col-12">
-        <!-- Filtrar por email -->
+        <!-- By email -->
         <div class="form-group">
             <label class="form-label">Email</label>
             <input ngModel type="text" name="email" class="form-control">
         </div>
     </div>
     <div class="col-lg-3 col-sm-6 col-12">
-        <!-- Filtrar por estado -->
+        <!-- By status -->
         <label class="form-label">Estatus</label>
         <select ngModel name="status" class="form-select">
                 <option value="" selected>Cualquiera</option>
@@ -39,14 +39,13 @@
             </select>
     </div>
     <div class="text-center">
-        <!-- Enviar -->
         <button type="submit" class="btn btn-info">Filtrar</button>
     </div>
 </form>
 <!--  -->
 <hr>
 <div *ngIf="users.length>0;else noUsers">
-    <!-- Mostrar todos los usuarios -->
+    <!-- Show all users -->
     <table class="table table-dark table-striped">
         <thead>
             <th class="text-center">Imagen</th>
@@ -81,12 +80,10 @@
             </tr>
         </tbody>
     </table>
-    <!--  -->
-    <!-- Control de paginación -->
     <pagination-controls previousLabel="Anterior" nextLabel="Siguiente" (pageChange)="page=$event">
     </pagination-controls>
-    <!--  -->
 </div>
+<!-- No users found -->
 <ng-template #noUsers>
     <div class="alert alert-warning">
         No hay usuarios con los criterios de búsqueda seleccionados

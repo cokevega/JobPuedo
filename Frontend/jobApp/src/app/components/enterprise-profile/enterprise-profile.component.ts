@@ -1,4 +1,3 @@
-//Ver y editar perfil (usuario empresa)
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
@@ -15,16 +14,11 @@ import { environment } from 'src/environments/environment';
 })
 export class EnterpriseProfileComponent implements OnInit {
 
-  //Recibir usuario
   @Input("user") user!: User;
-  //Rescatar formularios
   @ViewChild("editForm") editForm!: NgForm;
   @ViewChild("photoForm") photoForm!: NgForm;
-  //Mostrar mensaje de error formulario imagen
   showImageError: boolean = false;
-  //Habilitar botón de edición
   showEditButton: boolean = false;
-  //Archivos seleccionados en formulario imagen
   selectedFiles?: FileList;
   currentFile?: File;
   baseUrl: string = environment.baseUrl;
@@ -36,18 +30,16 @@ export class EnterpriseProfileComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    //Obtener id
+    //Get user's id
     this.authService.getMyId().subscribe((id: number) => {
       if (this.user.id === id) this.showEditButton = true;
     });
   }
 
-  //Validar campo
   validateField(field: string): boolean {
     return this.editForm?.controls[field]?.invalid && this.editForm?.controls[field]?.touched;
   }
 
-  //Editar perfil
   editProfile() {
     if (this.editForm.pristine) return;
     else this.userService.editProfile(this.user, this.editForm);

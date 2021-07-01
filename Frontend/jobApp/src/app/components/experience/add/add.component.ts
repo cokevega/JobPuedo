@@ -1,4 +1,3 @@
-//Añadir experiencia laboral
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
@@ -13,11 +12,8 @@ import { ExperienceService } from 'src/app/services/experience.service';
 })
 export class AddComponent {
 
-  //Rescatar formulario
   @ViewChild('formExperience') formExperience!: NgForm;
-  //Recibir usuario
   @Input('user') user!: User;
-  //Emitir nuevo usuario
   @Output() emitUser=new EventEmitter<User>();
 
   constructor(
@@ -25,12 +21,10 @@ export class AddComponent {
     private alertService:AlertService
   ) { }
 
-  //Validar campo
   validateFieldExperience(field: string) {
     return this.formExperience?.controls[field]?.invalid && this.formExperience?.controls[field]?.touched;
   }
 
-  //Añadir experiencia
   addExperience() {
     this.experienceService.addExperience(this.formExperience).subscribe((user: User) => {
       if (user) {

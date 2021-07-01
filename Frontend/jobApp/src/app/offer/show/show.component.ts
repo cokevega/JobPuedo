@@ -15,9 +15,8 @@ import { OfferService } from 'src/app/services/offer.service';
 })
 export class ShowComponent implements OnInit {
   
-  //¿Es para inscribirse?
+  //Show apply button?
   @Input('apply') apply:boolean=false;
-  //Rescatar formulario
   @ViewChild('form') form!:NgForm;
   offer!: Offer;
   enterprise!:User;
@@ -30,17 +29,17 @@ export class ShowComponent implements OnInit {
     private offerService: OfferService,
     private router:Router
   ) {
-    //Rescatar el id de la oferta
+    //Get the offer id
     this.activeRoute.params.subscribe((params: Params) => {
       this.id = params.id;
     });
   }
 
   ngOnInit() {
-    //Rescatar información de la oferta
+    //Offer information
     this.offerService.findOfferById(this.id).subscribe((offer: Offer) => {
       if (offer) {
-        //Si la oferta no está activa no se puede acceder a ella
+        //If offer is not active, user can not access
         if(offer.status!=='Active') {
           this.alertService.fail("La oferta solicitada ya no se encuentra activa.").then((result)=>{
             this.router.navigate(['/main/index']);
@@ -53,7 +52,7 @@ export class ShowComponent implements OnInit {
     });
   }
 
-  //Inscribirse a la oferta
+  //Apply to the offer
   applyOffer(offer_id:number) {
     let data:FormData=new FormData();
     data.append('comments',this.form.controls.comments.value);

@@ -1,4 +1,3 @@
-//Página principal
 import { Component, OnInit } from '@angular/core';
 
 import { Offer } from 'src/app/interfaces/interfaces';
@@ -19,13 +18,13 @@ export class IndexComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    //Obtener todas las ofertas activas
+    //Get all active offers
     this.offerService.getOffersByStatus("Active").subscribe((offers: Offer[]) => {
       this.offers = offers;
     });
   }
 
-  //Mostrar ofertas filtradas
+  //Show filtered offers
   showOffersSearched($event: Offer[]) {
     this.offers = $event;
   }

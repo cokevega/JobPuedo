@@ -9,21 +9,21 @@
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                     <form #form="ngForm" class="row register-form" (ngSubmit)="editOffer()">
                         <div class="col-md-6">
-                            <!-- Título -->
+                            <!-- Name/title -->
                             <div class="form-group">
                                 <input name="name" [(ngModel)]="offer.name" type="text" class="form-control" placeholder="Título de la oferta" required />
                                 <span class="form-text text-danger" *ngIf="validateField('name')">El título es obligatorio</span>
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <!-- Salario -->
+                            <!-- Salary -->
                             <div class="form-group">
                                 <input name="salary" [(ngModel)]="offer.salary" type="number" class="form-control" placeholder="Salario ofrecido" required min="0" />
                                 <span class="form-text text-danger" *ngIf="validateField('salary')">El salario debe ser mayor que 0</span>
                             </div>
                         </div>
                         <div class="col-12">
-                            <!-- Categoría -->
+                            <!-- Category -->
                             <div class="form-group">
                                 <select name="category" [(ngModel)]="offer.category.id" class="form-control" required>
                                     <option class="hidden" disabled>Selecciona categoría</option>
@@ -32,12 +32,12 @@
                                 <span class="form-text text-danger" *ngIf="validateField('category')">La categoría es obligatoria</span>
                             </div>
                             <div class="form-group">
-                                <!-- Descripción -->
+                                <!-- Description -->
                                 <input name="description" [(ngModel)]="offer.description" type="text" class="form-control" placeholder="Descripción" required minlength="50" />
                                 <span class="form-text text-danger" *ngIf="validateField('description')">Longitud mínima de 50 caracteres para la descripción</span>
                             </div>
                             <div class="row row-space">
-                                <!-- Detalles -->
+                                <!-- Details -->
                                 <editor required minlength="100" [(ngModel)]="offer.details" name="details" apiKey="qkfagpe6xw3ve8d8qwlvssr2diffjy4uptgt716xo0bwsxw6" initialValue="<p>Initial content of the editor</p>" [init]="{
                                     height: 500,
                                     menubar: false,
@@ -57,7 +57,6 @@
                             </div>
                         </div>
                         <div class="row justify-content-center">
-                            <!-- Enviar -->
                             <button type="submit" class="btnRegister" [disabled]="form.invalid">
                                 Editar
                             </button>

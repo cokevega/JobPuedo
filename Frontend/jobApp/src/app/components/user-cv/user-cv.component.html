@@ -5,21 +5,21 @@
                 <div class="px-4 pt-0 pb-4 cover">
                     <div class="media align-items-end profile-head">
                         <div class="row column mr-3">
-                            <!-- Imagen de perfil -->
+                            <!-- Profile image -->
                             <div *ngIf="user && user.image;else noImage">
                                 <img [src]="baseUrl+'/files/'+user.image.id" class="rounded mb-2 img-thumbnail">
                             </div>
                             <ng-template #noImage>
                                 <img src="assets/img/no-image.png" class="rounded mb-2 img-thumbnail">
                             </ng-template>
-                            <!-- Ir a editar perfil (los datos del usuario en sí, no de su CV) -->
+                            <!-- Edit profile info (name, last name..., not CV info) -->
                             <div class="row justify-content-start ml-1">
                                 <a *ngIf=" showEditButton" [routerLink]="[ '/user/edit',user.id]" class="col-8 btn btn-outline-dark btn-sm">
                                 Editar
                             </a>
                             </div>
                         </div>
-                        <!-- Datos personales -->
+                        <!-- User's personal info -->
                         <div class="media-body mb-5 text-white">
                             <h2 class="mt-0 mb-0">{{user.name}} {{user.last_name}}</h2>
                             <h5 class="mb-0">{{bornDate | date}}</h5>
@@ -28,7 +28,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- Recuento de experiencias, idiomas y estudios -->
+                <!-- Number of experiences, studies and languages -->
                 <div class="bg-light p-4 d-flex justify-content-end text-center">
                     <ul class="list-inline mb-0">
                         <li class="list-inline-item">
@@ -45,10 +45,11 @@
                 <!-- Skills -->
                 <h2 class="px-4 mt-3">Habilidades y tecnologías</h2>
                 <div class="px-4 mt-2">
+                    <!-- Add skill -->
                     <a *ngIf="showEditButton" class="btn btn-info mb-2" data-bs-toggle="collapse" href="#addSkill" role="button" aria-expanded="false" aria-controls="addSkill">
                         Añadir
                     </a>
-                    <!-- Añadir skill -->
+                    <!-- Add skill form -->
                     <div class="row">
                         <div class="col">
                             <div class="collapse multi-collapse" id="addSkill">
@@ -63,13 +64,16 @@
                             <div class="d-inline-block px-4 mt-2" *ngFor="let skill of user.skills">
                                 <span>{{skill.name}}</span>
                                 <span><b class="px-2">{{skill.level}}</b></span>
+                                <!-- Edit skill -->
                                 <a *ngIf="showEditButton" class="btn btn-primary p-1 ml-2 mr-1" data-bs-toggle="collapse" [href]="'#editSkill'+skill.id" role="button" aria-expanded="false" aria-controls="editSkill">
                                     <mat-icon>edit</mat-icon>
                                 </a>
+                                <!-- Delete skill -->
                                 <a *ngIf="showEditButton" class="btn btn-danger p-1 text-light" data-bs-toggle="collapse" (click)="deleteSkill(skill.id)" role="button" aria-expanded="false" aria-controls="deleteSkill">
                                     <mat-icon>delete</mat-icon>
                                 </a>
                             </div>
+                            <!-- Edit skill form -->
                             <div *ngFor="let skill of user.skills">
                                 <div class="collapse multi-collapse mt-2 mb-2" [id]="'editSkill'+skill.id">
                                     <app-edit-skill [skill]="skill" [user]="user" (emitUser)="userEmitted($event)"></app-edit-skill>
@@ -78,13 +82,14 @@
                         </div>
                     </div>
                 </div>
-                <!-- Experiencias -->
+                <!-- Experiences -->
                 <h2 class="px-4 mt-3">Experiencia laboral</h2>
                 <div class="px-4 mt-2">
+                    <!-- Add experience -->
                     <a *ngIf="showEditButton" class="btn btn-info mb-2" data-bs-toggle="collapse" href="#addExperience" role="button" aria-expanded="false" aria-controls="addExperience">
                         Añadir
                     </a>
-                    <!-- Añadir experiencia -->
+                    <!-- Add experience form -->
                     <div class="row">
                         <div class="col">
                             <div class="collapse multi-collapse" id="addExperience">
@@ -98,10 +103,12 @@
                         <div class="d-flex justify-content-between align-items-end">
                             <h3 class="mb-0">{{experience.position}} </h3>
                             <div>
-                                <a *ngIf="showEditButton" class="btn btn-primary p-1 mr-1" data-bs-toggle="collapse" [href]="'#editExperience'+experience.id" role="button" aria-expanded="false" aria-controls="addLanguage">
+                                <!-- Edit experience -->
+                                <a *ngIf="showEditButton" class="btn btn-primary p-1 mr-1" data-bs-toggle="collapse" [href]="'#editExperience'+experience.id" role="button" aria-expanded="false" aria-controls="editExperience">
                                     <mat-icon>edit</mat-icon>
                                 </a>
-                                <a *ngIf="showEditButton" class="btn btn-danger p-1 text-light" data-bs-toggle="collapse" (click)="deleteExperience(experience.id)" role="button" aria-expanded="false" aria-controls="addLanguage">
+                                <!-- Delete experience -->
+                                <a *ngIf="showEditButton" class="btn btn-danger p-1 text-light" data-bs-toggle="collapse" (click)="deleteExperience(experience.id)" role="button" aria-expanded="false" aria-controls="deleteExperience">
                                     <mat-icon>delete</mat-icon>
                                 </a>
                             </div>
@@ -112,6 +119,7 @@
                             <p>{{experience.comments}}</p>
                             <div class="row">
                                 <div class="col">
+                                    <!-- Edit experience form -->
                                     <div class="collapse multi-collapse" [id]="'editExperience'+experience.id">
                                         <app-edit-experience [user]="user" [experience]="experience" (emitUser)="userEmitted($event)"></app-edit-experience>
                                     </div>
@@ -120,10 +128,10 @@
                         </div>
                     </div>
                 </div>
-                <!-- Formación e idiomas -->
+                <!-- Education and languages -->
                 <div class="py-4 px-4">
                     <div class="row justify-content-center mb-3">
-                        <!-- Formación -->
+                        <!-- Education -->
                         <div class="col-lg-5 col-12">
                             <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                                 <div class="carousel-inner">
@@ -137,10 +145,12 @@
                                                     <h4 class="card-title text-center">{{study.school}}</h4>
                                                 </div>
                                                 <div class="card-body d-flex justify-content-center">
-                                                    <a *ngIf="showEditButton" class="btn btn-primary p-1 mr-1" data-bs-toggle="collapse" [href]="'#editStudy'+study.id" role="button" aria-expanded="false" aria-controls="editEducation">
+                                                    <!-- Edit study -->
+                                                    <a *ngIf="showEditButton" class="btn btn-primary p-1 mr-1" data-bs-toggle="collapse" [href]="'#editStudy'+study.id" role="button" aria-expanded="false" aria-controls="editStudy">
                                                         <mat-icon>edit</mat-icon>
                                                     </a>
-                                                    <a *ngIf="showEditButton" class="btn btn-danger p-1 text-light" data-bs-toggle="collapse" (click)="deleteStudy(study.id)" role="button" aria-expanded="false" aria-controls="deleteEducation">
+                                                    <!-- Delete study -->
+                                                    <a *ngIf="showEditButton" class="btn btn-danger p-1 text-light" data-bs-toggle="collapse" (click)="deleteStudy(study.id)" role="button" aria-expanded="false" aria-controls="deleteStudy">
                                                         <mat-icon>delete</mat-icon>
                                                     </a>
                                                 </div>
@@ -159,21 +169,21 @@
                                     </button>
                                 </div>
                             </div>
-                            <!-- Editar formación -->
+                            <!-- Edit study form -->
                             <div *ngFor="let study of user.education" class="collapse multi-collapse mt-2 mb-2" [id]="'editStudy'+study.id">
                                 <app-edit-education [study]="study" [user]="user" (emitUser)="userEmitted($event)"></app-edit-education>
                             </div>
                             <a *ngIf="showEditButton" class="btn btn-info mt-0 mb-2" data-bs-toggle="collapse" href="#addStudy" role="button" aria-expanded="false" aria-controls="addStudy">
                             Añadir estudios
                         </a>
-                            <!-- Añadir formación -->
+                            <!-- Add study form -->
                             <div class="row justify-content-center">
                                 <div class="collapse multi-collapse mt-2 mb-2" id="addStudy">
                                     <app-add-education [user]="user" (emitUser)="userEmitted($event)"></app-add-education>
                                 </div>
                             </div>
                         </div>
-                        <!-- Idiomas -->
+                        <!-- Languages -->
                         <div class="col-lg-5 col-12">
                             <div class="card text-dark bg-light mb-3">
                                 <h2 class="card-header text-center">Idiomas</h2>
@@ -185,15 +195,17 @@
                                                     {{language.name}} - <span class=" fst-italic">{{language.level}}</span>
                                                 </div>
                                                 <div>
+                                                    <!-- Edit language -->
                                                     <a *ngIf="showEditButton" class="btn btn-primary p-1 mr-1" data-bs-toggle="collapse" [href]="'#editLanguage'+language.id" role="button" aria-expanded="false" aria-controls="editLanguage">
                                                         <mat-icon>edit</mat-icon>
                                                     </a>
-                                                    <a *ngIf="showEditButton" class="btn btn-danger p-1 text-light" data-bs-toggle="collapse" (click)="deleteLanguage(language.id)" role="button" aria-expanded="false" aria-controls="editLanguage">
+                                                    <!-- Delete language -->
+                                                    <a *ngIf="showEditButton" class="btn btn-danger p-1 text-light" data-bs-toggle="collapse" (click)="deleteLanguage(language.id)" role="button" aria-expanded="false" aria-controls="deleteLanguage">
                                                         <mat-icon>delete</mat-icon>
                                                     </a>
                                                 </div>
                                             </div>
-                                            <!-- Editar idioma -->
+                                            <!-- Edit language form -->
                                             <div class="collapse multi-collapse mt-2 mb-2" [id]="'editLanguage'+language.id">
                                                 <app-edit-language [language]="language" [user]="user" (emitUser)="userEmitted($event)"></app-edit-language>
                                             </div>
@@ -201,10 +213,11 @@
                                     </ul>
                                 </div>
                             </div>
-                            <!-- Añadir idioma -->
+                            <!-- Add language -->
                             <a *ngIf="showEditButton" class="btn btn-info mt-2" data-bs-toggle="collapse" href="#addLanguage" role="button" aria-expanded="false" aria-controls="addLanguage">
                                 Añadir idioma
                             </a>
+                            <!-- Add language form -->
                             <div class="collapse multi-collapse mt-2 mb-2" id="addLanguage">
                                 <app-add-language [user]="user" (emitUser)="userEmitted($event)"></app-add-language>
                             </div>

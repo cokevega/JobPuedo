@@ -1,4 +1,3 @@
-//Página de registro, tanto trabajadores como empresas
 import { Component, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -12,7 +11,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class RegisterComponent {
 
-  //Formulario trabajadores
+  //USER (worker) users form
   formUser: FormGroup = this.fb.group({
     name: ['', Validators.required],
     last_name: ['', Validators.required],
@@ -23,7 +22,7 @@ export class RegisterComponent {
     confirm: ['', Validators.required],
     enterprise: [false],
   });
-  //Formulario empresas
+  //ENTERPRISE users form
   formEnterprise: FormGroup = this.fb.group({
     contact_name: ['', Validators.required],
     contact_last_name: ['', Validators.required],
@@ -35,7 +34,6 @@ export class RegisterComponent {
     description: ['Introduce aquí una presentación de tu empresa para que puedan leer tus futuros trabajadores.'],
     enterprise: [true],
   });
-  //Formulario a enviar
   form!: FormGroup;
 
   constructor(
@@ -43,19 +41,17 @@ export class RegisterComponent {
     private authService: AuthService
   ) { }
   
-  //Registrar usuario, se escoge formulario en función del campo oculto enterprise
+  //The form is chosen depending on 'enterprise' field
   register(enterprise: boolean) {
     this.form = (enterprise) ? this.formEnterprise : this.formUser;
     this.authService.register(this.form);
   }
 
-  //Validar campo formulario trabajadores
   validateField(field: string) {
     if (field !== 'confirm') return this.formUser.controls[field].invalid && this.formUser.controls[field].touched;
     else return this.formUser.controls[field].value !== this.formUser.controls['password'].value;
   }
 
-  //Validar campo formulario empresas
   validateFieldEnterprise(field: string) {
     if (field !== 'confirm') return this.formEnterprise.controls[field].invalid && this.formEnterprise.controls[field].touched;
     else return this.formEnterprise.controls[field].value !== this.formEnterprise.controls['password'].value;

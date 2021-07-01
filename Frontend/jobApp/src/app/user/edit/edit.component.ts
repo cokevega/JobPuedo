@@ -16,9 +16,7 @@ import { UserService } from 'src/app/services/user.service';
 export class EditComponent implements OnInit {
 
   user!: User;
-  //Rescatar formulario
   @ViewChild("editForm") editForm!: NgForm;
-  //Rescatar formulario editar foto
   @ViewChild("photoForm") photoForm!: NgForm;
   showImageError: boolean = false;
   showEditButton: boolean = true;
@@ -37,14 +35,14 @@ export class EditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //Obtener información del usuario
+    //User information
     this.userService.findUser(this.route.snapshot.params.id).subscribe((user: User) => {
       if(user) {
         this.user = user;
         this.dateBorn = user.born?.toString().substring(0, 10)!;
       }
     });
-    //Obtener id del usuario para mostrar botones de edición
+    //Show edit buttons?
     this.authService.getMyId().subscribe((id: number) => {
       if (this.user && id !== this.user.id) {
         this.showEditButton = false;
