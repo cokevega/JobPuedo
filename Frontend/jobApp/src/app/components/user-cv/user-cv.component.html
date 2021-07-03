@@ -22,7 +22,7 @@
                         <!-- User's personal info -->
                         <div class="media-body mb-5 text-white">
                             <h2 class="mt-0 mb-0">{{user.name}} {{user.last_name}}</h2>
-                            <h5 class="mb-0">{{bornDate | date}}</h5>
+                            <h5 class="mb-0">{{user.born | date}}</h5>
                             <h5 class="mb-0" *ngIf="user.phone">{{user.phone}}</h5>
                             <h5 class="mb-4">{{user.email}}</h5>
                         </div>

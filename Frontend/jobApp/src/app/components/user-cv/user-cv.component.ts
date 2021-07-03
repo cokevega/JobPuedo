@@ -18,7 +18,6 @@ import { environment } from 'src/environments/environment';
 export class UserCvComponent implements OnInit, DoCheck {
 
   @Input('user') user!: User;
-  bornDate!: string;
   showEditButton: boolean = false;
   id!: number;
   baseUrl: string = environment.baseUrl;
@@ -44,7 +43,6 @@ export class UserCvComponent implements OnInit, DoCheck {
     //Show edit/add/delete buttons if the user is the owner of the profile
     if (this.id) {
       if (this.user?.id === this.id) this.showEditButton = true;
-      this.bornDate = this.user?.born?.toString().substring(0, 10)!;
     }
     if (this.user && this.user.education) this.userService.sortArrayByEnd(this.user.education);
     if (this.user && this.user.experiences) this.userService.sortArrayByEnd(this.user.experiences);
