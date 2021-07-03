@@ -39,7 +39,6 @@ export class EditComponent implements OnInit {
     this.userService.findUser(this.route.snapshot.params.id).subscribe((user: User) => {
       if(user) {
         this.user = user;
-        this.dateBorn = user.born?.toString().substring(0, 10)!;
       }
     });
     //Show edit buttons?

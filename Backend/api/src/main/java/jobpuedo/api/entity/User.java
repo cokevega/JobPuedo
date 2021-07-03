@@ -40,6 +40,7 @@ public class User {
 	@NotBlank
 	private String name;
 	private String last_name;
+	@Temporal(TemporalType.DATE)
 	private Date born;
 	@NotBlank
 	private String email;

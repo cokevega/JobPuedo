@@ -22,17 +22,18 @@
                 </button>
             </form>
         </div>
+        <!-- Profile info -->
         <div class="col-xl-8 col-md-7 col-12">
             <div class="card mb-3">
                 <div class="card-body">
-                    <form #editForm="ngForm" (ngSubmit)="editProfile()">
+                    <form *ngIf="user" #editForm="ngForm" (ngSubmit)="editProfile()">
                         <!-- Born date -->
                         <div class="row align-items-center">
                             <div class="col-sm-3">
                                 <h4 class="mb-0">Fecha de nacimiento</h4>
                             </div>
                             <div class="col-sm-9">
-                                <input [disabled]="(!showEditButton)" [(ngModel)]="dateBorn" name="born" type="date" class="text-secondary form-control" required>
+                                <input [disabled]="(!showEditButton)" [(ngModel)]="user.born" name="born" type="date" class="text-secondary form-control" required>
                                 <span *ngIf="validateField('born')" class="text-danger">
                                     La fecha de nacimiento es obligatoria
                                 </span>

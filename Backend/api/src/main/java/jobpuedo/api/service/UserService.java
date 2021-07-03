@@ -88,7 +88,7 @@ public class UserService {
 		user.setRegistered_at(new Date());
 		user.setStatus(1);
 		String userRole;
-		//Is enterprise
+		// Is enterprise
 		if (user.isEnterprise()) {
 			user.setCif(signUpRequest.getCif());
 			user.setContact_name(signUpRequest.getContact_name());
@@ -96,7 +96,7 @@ public class UserService {
 			user.setDescription(signUpRequest.getDescription());
 			userRole = "ROLE_ENTERPRISE";
 		} else {
-			//Is user (worker)
+			// Is user (worker)
 			user.setLast_name(signUpRequest.getLast_name());
 			user.setBorn(signUpRequest.getBorn());
 			if (!signUpRequest.getPhone().equals(""))
@@ -113,18 +113,16 @@ public class UserService {
 
 	public User edit(User user) {
 		User oldUser = this.findById(user.getId());
-		user.setEducation(oldUser.getEducation());
-		user.setEnterprise(oldUser.isEnterprise());
-		user.setExperiences(oldUser.getExperiences());
-		user.setImage(oldUser.getImage());
-		user.setLanguages(oldUser.getLanguages());
-		user.setOffers(oldUser.getOffers());
-		user.setPassword(oldUser.getPassword());
-		user.setRegistered_at(oldUser.getRegistered_at());
-		user.setRoles(oldUser.getRoles());
-		user.setSkills(oldUser.getSkills());
-		user.setStatus(oldUser.getStatus());
-		return repo.save(user);
+		oldUser.setBorn(user.getBorn());
+		oldUser.setEmail(user.getEmail());
+		oldUser.setLast_name(user.getLast_name());
+		oldUser.setPhone(user.getPhone());
+		oldUser.setName(user.getName());
+		oldUser.setCif(user.getCif());
+		oldUser.setContact_last_name(user.getContact_last_name());
+		oldUser.setContact_name(user.getContact_name());
+		oldUser.setDescription(user.getDescription());
+		return repo.save(oldUser);
 	}
 
 	public User editImage(User user, MultipartFile file) {
@@ -163,9 +161,9 @@ public class UserService {
 	}
 
 	public void delete(User user) {
-		//Soft delete
+		// Soft delete
 		if (user.isEnterprise()) {
-			//Inactivate offers
+			// Inactivate offers
 			List<Offer> offers = user.getOffers();
 			Iterator<Offer> it = offers.iterator();
 			while (it.hasNext()) {
@@ -174,7 +172,7 @@ public class UserService {
 				offerService.save(offer);
 			}
 		} else {
-			//Delete applications
+			// Delete applications
 			List<Application> applications = user.getApplications();
 			Iterator<Application> it = applications.iterator();
 			while (it.hasNext()) {
@@ -195,7 +193,7 @@ public class UserService {
 			matcher = matcher.withMatcher("email", ExampleMatcher.GenericPropertyMatchers.contains());
 		}
 		if (!userSearched.getName().isBlank()) {
-			//Add another field to the matcher, if necessary
+			// Add another field to the matcher, if necessary
 			user.setName(userSearched.getName());
 			matcher = matcher.withMatcher("name", ExampleMatcher.GenericPropertyMatchers.contains());
 		}
@@ -219,7 +217,7 @@ public class UserService {
 	}
 
 	public void deleteUserDefinitely(User user) {
-		//Delete orphan children
+		// Delete orphan children
 		user.setRoles(null);
 		repo.save(user);
 		if (user.getApplications() != null) {
@@ -275,13 +273,13 @@ public class UserService {
 	}
 
 	public Collection<User> searchWorkers(WorkerSearchedRequest worker) {
-		//Filter workers
+		// Filter workers
 		if (worker.getEducation().isBlank() && worker.getExperiences().isBlank())
 			return repo.findByStatusAndEnterprise(1, false);
 		Set<User> usersEducation = new HashSet<User>();
 		Set<User> usersExperience = new HashSet<User>();
 		if (!worker.getEducation().isBlank()) {
-			//Search coincidences in the workers' education
+			// Search coincidences in the workers' education
 			ExampleMatcher matcher = ExampleMatcher.matching().withMatcher("name",
 					ExampleMatcher.GenericPropertyMatchers.contains());
 			Education education = new Education();
@@ -292,12 +290,13 @@ public class UserService {
 			while (it.hasNext()) {
 				usersEducation.add(it.next().getUser());
 			}
-			if(worker.getExperiences().isBlank()) return usersEducation;
+			if (worker.getExperiences().isBlank())
+				return usersEducation;
 		}
 		if (!worker.getExperiences().isBlank()) {
-			//Search coincidences in the workers' experiences
-			//2 fields evaluated: position and comments
-			//Position
+			// Search coincidences in the workers' experiences
+			// 2 fields evaluated: position and comments
+			// Position
 			ExampleMatcher matcher = ExampleMatcher.matching().withMatcher("position",
 					ExampleMatcher.GenericPropertyMatchers.contains());
 			Experience experience = new Experience();
@@ -308,7 +307,7 @@ public class UserService {
 			while (it.hasNext()) {
 				usersExperience.add(it.next().getUser());
 			}
-			//Comments
+			// Comments
 			matcher = ExampleMatcher.matching().withMatcher("comments",
 					ExampleMatcher.GenericPropertyMatchers.contains());
 			experience = new Experience();
@@ -319,9 +318,10 @@ public class UserService {
 			while (it.hasNext()) {
 				usersExperience.add(it.next().getUser());
 			}
-			if(worker.getEducation().isBlank()) return usersExperience;
+			if (worker.getEducation().isBlank())
+				return usersExperience;
 		}
-		//Merge both Set
+		// Merge both Set
 		Set<User> usersFound = new HashSet<User>();
 		Iterator<User> it = usersEducation.iterator();
 		while (it.hasNext()) {

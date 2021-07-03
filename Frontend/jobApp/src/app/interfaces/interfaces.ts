@@ -60,7 +60,7 @@ export interface User {
     id: number;
     name: string;
     last_name?: string;
-    born?: Date;
+    born?: string;
     email: string;
     password: string;
     phone?: string;

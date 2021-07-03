@@ -42,7 +42,7 @@ export class EnterpriseProfileComponent implements OnInit {
 
   editProfile() {
     if (this.editForm.pristine) return;
-    else this.userService.editProfile(this.user, this.editForm);
+    else this.userService.editProfile(this.user,this.editForm);
   }
 
   selectFile(event: any) {
